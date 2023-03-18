@@ -21,4 +21,6 @@ void login(User_node *users, User_node *&current_user);
 
 void show_menu();
 
-void change_password(User_node *&users);
+void change_password(User_node *&current_user);
+
+void delete_user_data(User_node *&users);

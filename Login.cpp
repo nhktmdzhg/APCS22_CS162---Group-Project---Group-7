@@ -23,3 +23,13 @@ void login(User_node *users, User_node *&current_user) {
         cout << "Incorrect username or password. Please try again." << endl;
     }
 }
+
+void delete_user_data(User_node *&users) {
+    while (users)
+    {
+        User_node *tmp = users;
+        users = users->next;
+        delete tmp;
+    }
+    
+}
