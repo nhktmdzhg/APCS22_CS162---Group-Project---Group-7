@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 #include <fstream>
 
 using namespace std;
@@ -15,7 +15,7 @@ struct User_node {
     User_node *next;
 };
 
-void import_login_data (User_node *&users, ifstream fin);
+void import_login_data (User_node *&users, ifstream &fin);
 
 void login(User_node *users, User_node *&current_user);
 

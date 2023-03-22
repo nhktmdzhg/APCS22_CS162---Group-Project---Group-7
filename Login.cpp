@@ -8,19 +8,20 @@ void login(User_node *users, User_node *&current_user) {
     cin >> username;
     cout << "Enter your password: ";
     cin >> password;
-
+    bool true_user = false;
     // Check if the password and username are correct
-    while (true) {
+    while (true_user) {
         User_node *cur = users;
         while (cur) {
             if (cur->data.username == username && cur->data.password == password) {
+                true_user = true;
                 cout << "Welcome, " << username << endl;
                 current_user = cur;
                 break;
             }
             cur = cur->next;
         }
-        cout << "Incorrect username or password. Please try again." << endl;
+        if (!true_user) cout << "Incorrect username or password. Please try again." << endl;
     }
 }
 
