@@ -8,5 +8,6 @@ int main() {
     import_login_data(users, fin);
     login (users, current_user);
     delete_user_data(users);
+    fin.close();
     return 0;
 }
