@@ -10,7 +10,7 @@ void login(User_node *users, User_node *&current_user) {
     cin >> password;
     bool true_user = false;
     // Check if the password and username are correct
-    while (true_user) {
+    while (!true_user) {
         User_node *cur = users;
         while (cur) {
             if (cur->data.username == username && cur->data.password == password) {
