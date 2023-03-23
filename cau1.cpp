@@ -44,3 +44,10 @@ void createNewSemester(semester& sem, bool isAdmin) {
 
     cout << "New semester created successfully." << endl;
 }
+classes createClass(string className, int numStudents) 
+{
+    classes newClass;
+    newClass.class_name = className;
+    newClass.studentArray = new student[numStudents];
+    return newClass;
+}
