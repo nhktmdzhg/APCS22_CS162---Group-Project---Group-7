@@ -1,9 +1,7 @@
 #include "Login.h"
 
-struct SchoolYear {
-    string SchoolYearName;
-    int start_year;
-    semester semester1, semester2, semester3;
+struct score {
+    int total,final,midterm,other;
 };
 
 struct student {
@@ -12,11 +10,6 @@ struct student {
     bool isMale;
     int social_id;
     score s;
-};
-
-struct classes {
-    student *studentArray;
-    string class_name;
 };
 
 struct course {
@@ -34,6 +27,13 @@ struct semester {
     course *courseArray;
 };
 
-struct score {
-    int total,final,midterm,other;
+struct SchoolYear {
+    string SchoolYearName;
+    int start_year;
+    semester semester1, semester2, semester3;
+};
+
+struct classes {
+    student *studentArray;
+    string class_name;
 };
