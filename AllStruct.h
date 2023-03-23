@@ -5,8 +5,8 @@ struct score {
 };
 
 struct student {
-    int No,ID,dob_day,dob_month,dob_year;
-    string first_name, last_name;
+    int No,ID;
+    string first_name, last_name, date_of_birth;
     bool isMale;
     int social_id;
     score s;
