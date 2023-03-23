@@ -37,3 +37,6 @@ struct classes {
     student *studentArray;
     string class_name;
 };
+void createNewSchoolYear(SchoolYear& sy, bool isAdmin);
+
+void createNewSemester(semester& sem, bool isAdmin);
