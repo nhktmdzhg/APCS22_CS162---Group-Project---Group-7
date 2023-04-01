@@ -40,7 +40,7 @@ struct semester {
 struct SchoolYear {
     string SchoolYearName;
     int start_year;
-    semester semester1, semester2, semester3;
+    semester *semester1, *semester2, *semester3;
 };
 
 struct classes {
@@ -63,9 +63,9 @@ void addNewClass(classes_node *&head); //câu 2
 
 void addStudentToClass(classes &c, ifstream &fin); //câu 3
 
-void createSemester(SchoolYear *&sy, semester &current_sem); //câu 6
+void createSemester(SchoolYear *&sy, semester *&current_sem); //câu 6
 
-void addCourse(semester &current_sem); //câu 7 (trong semester có course rồi nên update cái đó nha :v)
+void addCourse(semester *&current_sem); //câu 7 (trong semester có course rồi nên update cái đó nha :v)
 
 void importStudenttoCourse(course &courses, ifstream &fin); //câu 8
 
