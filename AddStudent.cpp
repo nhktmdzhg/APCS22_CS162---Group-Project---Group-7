@@ -2,9 +2,8 @@
 
 void addStudentToClass(classes &c, ifstream &fin) {
     fin.open(c.class_name + ".csv");
-    string oneStudent;
     student_node *cur;
-    do {
+    while (!fin.eof()) {
         //tạo node mới
         if (!c.head) {
             c.head = new student_node;
@@ -37,6 +36,6 @@ void addStudentToClass(classes &c, ifstream &fin) {
         cur->data.social_id = stoi(social_id);
 
         cur->next = nullptr;
-    } while (!fin.eof());
+    }
     fin.close();
 }

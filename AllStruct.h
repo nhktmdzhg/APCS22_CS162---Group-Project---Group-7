@@ -52,13 +52,17 @@ struct classes_node {
     classes_node *next;
 };
 
-void importSchoolYear(SchoolYear *&sy, ifstream &fin, int numOfSchoolYear); //câu 1 (làm mảng đi chứ singly link list mệt quá :))))
+void importSchoolYear(SchoolYear *&sy, ifstream &fin, int numOfSchoolYear);
 
-void createNewSchoolYear(SchoolYear *&sy, int numOfSchoolYear); //câu 1
+void createNewSchoolYear(SchoolYear *&sy, int &numOfSchoolYear);
 
-void importClass(classes_node *&head, ifstream &fin); //câu 2
+void exportSchoolYear(SchoolYear *sy, int numOfSchoolYear, ofstream &fout);
+
+void importClass(classes_node *&head, ifstream &fin);
 
 void addNewClass(classes_node *&head); //câu 2
+
+void exportClass(classes_node *head, ofstream &fout);
 
 void addStudentToClass(classes &c, ifstream &fin); //câu 3
 
