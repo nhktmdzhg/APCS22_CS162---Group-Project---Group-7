@@ -39,7 +39,6 @@ struct semester {
 
 struct SchoolYear {
     string SchoolYearName;
-    int start_year;
     semester *semester1, *semester2, *semester3;
 };
 
