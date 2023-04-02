@@ -1,4 +1,4 @@
-#include "Login.h"
+#include "Menu.h"
 
 struct score {
     int total,final,midterm,other;
@@ -15,6 +15,7 @@ struct student {
 struct student_node {
     student data;
     student_node *next;
+    student_node() : data(), next(nullptr) {}
 };
 
 struct course {
@@ -25,6 +26,7 @@ struct course {
     string class_name;
     string teacher_name;
     student_node *head;
+    course() : course_id(), num_of_credit(), max_student(), day_of_week(), session(), course_name(), class_name(), teacher_name(), head(nullptr) {}
 };
 
 struct course_node {
@@ -73,3 +75,5 @@ void addCourse(semester *&current_sem); //câu 7 (trong semester có course rồ
 void importStudenttoCourse(course &courses, ifstream &fin); //câu 8
 
 void viewListofCourse(course_node *head); //câu 9
+void addStudentToCourse(course_node *courses, int course_id, student_node *new_student);
+int getStudentCount(student_node *head) ;

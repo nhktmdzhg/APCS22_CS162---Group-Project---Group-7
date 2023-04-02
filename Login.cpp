@@ -1,40 +1,41 @@
 #include "Login.h"
 
 void import_login_data(User_node *&users, ifstream &fin) {
-    users = new User_node;
-    User_node *cur = users;
+    User_node *cur;
     while (!fin.eof()) {
+        if (!users) {
+            users = new User_node;
+            cur = users;
+        } else {
+            cur->next = new User_node;
+            cur = cur->next;
+        }
         fin >> cur->data.username >> cur->data.password >> cur->data.isAdmin;
-        cur->next = new User_node;
-        cur = cur->next;
         cur->next = nullptr;
     }
 }
 
 void login(User_node *users, User_node *&current_user) {
-
-    // Log in to system
-    string username, password;
-    cout << "Enter your username: ";
-    cin >> username;
-    cout << "Enter your password: ";
-    cin >> password;
-    bool true_user = false;
-    // Check if the password and username are correct
-    while (!true_user) {
+    while (true) {
+        // Log in to system
+        string username, password;
+        cout << "Enter your username: ";
+        cin >> username;
+        cout << "Enter your password: ";
+        cin >> password;
         User_node *cur = users;
         while (cur) {
             if (cur->data.username == username && cur->data.password == password) {
-                true_user = true;
-                cout << "Welcome, " << username << endl;
+                cout << "Welcome " << username << endl;
                 current_user = cur;
-                break;
+                return;
             }
             cur = cur->next;
         }
-        if (!true_user) cout << "Incorrect username or password. Please try again." << endl;
+        cout << "Incorrect username or password. Please try again." << endl;
     }
 }
+
 
 void change_password(User_node *&current_user) {
     string current_password, new_password, check_new_password;
