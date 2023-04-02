@@ -1,4 +1,4 @@
-#include "Login.h"
+#include "Menu.h"
 
 struct score {
     int total,final,midterm,other;
@@ -15,6 +15,7 @@ struct student {
 struct student_node {
     student data;
     student_node *next;
+    student_node() : data(), next(nullptr) {}
 };
 
 struct course {
@@ -25,6 +26,7 @@ struct course {
     string class_name;
     string teacher_name;
     student_node *head;
+    course() : course_id(), num_of_credit(), max_student(), day_of_week(), session(), course_name(), class_name(), teacher_name(), head(nullptr) {}
 };
 
 struct course_node {
