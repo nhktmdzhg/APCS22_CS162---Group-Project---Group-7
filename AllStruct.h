@@ -75,3 +75,5 @@ void addCourse(semester *&current_sem); //câu 7 (trong semester có course rồ
 void importStudenttoCourse(course &courses, ifstream &fin); //câu 8
 
 void viewListofCourse(course_node *head); //câu 9
+void addStudentToCourse(course_node *courses, int course_id, student_node *new_student);
+int getStudentCount(student_node *head) ;
