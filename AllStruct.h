@@ -68,12 +68,14 @@ void exportClass(classes_node *head, ofstream &fout);
 
 void addStudentToClass(classes &c, ifstream &fin); //câu 3
 
-void createSemester(SchoolYear *&sy, semester *&current_sem, bool isAdmin); //câu 6
+void createSemester(SchoolYear*& sy, semester*& current_sem, bool isAdmin); //câu 6
 
-void addCourse(semester *&current_sem); //câu 7 (trong semester có course rồi nên update cái đó nha :v)
+void addCourse(semester* sem); //câu 7 (trong semester có course rồi nên update cái đó nha :v)
 
 void importStudenttoCourse(course &courses, ifstream &fin); //câu 8
 
 void viewListofCourse(course_node *head); //câu 9
+
 void addStudentToCourse(course_node *courses, int course_id, student_node *new_student);
+
 int getStudentCount(student_node *head) ;
