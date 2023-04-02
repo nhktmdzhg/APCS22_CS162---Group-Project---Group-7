@@ -66,7 +66,7 @@ void exportClass(classes_node *head, ofstream &fout);
 
 void addStudentToClass(classes &c, ifstream &fin); //câu 3
 
-void createSemester(SchoolYear *&sy, semester *&current_sem); //câu 6
+void createSemester(SchoolYear *&sy, semester *&current_sem, bool isAdmin); //câu 6
 
 void addCourse(semester *&current_sem); //câu 7 (trong semester có course rồi nên update cái đó nha :v)
 
