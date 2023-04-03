@@ -2,7 +2,9 @@
 
 void import_login_data(User_node *&users, ifstream &fin) {
     User_node *cur;
-    while (!fin.eof()) {
+    string line;
+
+    while (getline(fin, line)) {
         if (!users) {
             users = new User_node;
             cur = users;
@@ -10,10 +12,24 @@ void import_login_data(User_node *&users, ifstream &fin) {
             cur->next = new User_node;
             cur = cur->next;
         }
-        fin >> cur->data.username >> cur->data.password >> cur->data.isAdmin;
+
+        stringstream split(line);
+        string username, password, isAdminStr;
+
+        getline(split, username, ' ');
+        getline(split, password, ' ');
+        getline(split, isAdminStr);
+
+        cur->data.username = username;
+        cur->data.password = password;
+        cur->data.isAdmin = (isAdminStr == "1");
+
+        if (cur->data.isAdmin) getline(fin,cur->data.adminName);
+
         cur->next = nullptr;
     }
 }
+
 
 void login(User_node *users, User_node *&current_user) {
     while (true) {
@@ -70,7 +86,7 @@ void delete_user_data(User_node *&users) {
 
 void export_login_data(User_node *users, ofstream &fout) {
     while (users) {
-        fout << users->data.username << " " << users->data.password << " " << users->data.isAdmin << endl;
+        fout << users->data.username << " " << users->data.password << " " << (int)users->data.isAdmin << endl;
         users = users->next;
     }
 }

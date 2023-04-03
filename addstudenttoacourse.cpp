@@ -1,6 +1,4 @@
 
-
-#include"login.h"
 #include"AllStruct.h"
 void addStudentToCourse(course_node *courses, int course_id, student_node *new_student) {
     course_node *cur_course = courses;
@@ -12,7 +10,6 @@ void addStudentToCourse(course_node *courses, int course_id, student_node *new_s
                 cout << "Error: The course has reached its maximum student limit." << endl;
                 return;
             }
-          
             student_node *cur_student = cur_course->data.head;
             if (cur_student == nullptr) {
                 cur_course->data.head = new_student;

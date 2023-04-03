@@ -1,6 +1,4 @@
-
-#include"AllStruct.h"
-#include"Login.h"
+#include "AllStruct.h"
 void removeStudentFromCourse(course_node *courses, int course_id, int student_id) {
     // Find the course with the given ID by looping through the whole list
     course_node *current_course = courses;

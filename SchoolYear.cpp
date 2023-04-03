@@ -1,17 +1,19 @@
 #include "AllStruct.h"
 
-void importSchoolYear(SchoolYear *&sy, ifstream &fin, int numOfSchoolYear) {
+void importSchoolYear(SchoolYear *&sy, ifstream &fin, int &numOfSchoolYear) {
     int i = 0;
-    while (!fin.eof()) {
-        getline(fin, sy[i].SchoolYearName);
-        int sem1, sem2, sem3;
-        fin >> sem1 >> sem2 >> sem3;
-        if (sem1 == 0) sy[i].semester1 = nullptr;
-        else sy[i].semester1 = new semester;
-        if (sem2 == 0) sy[i].semester2 = nullptr;
-        else sy[i].semester2 = new semester;
-        if (sem3 == 0) sy[i].semester3 = nullptr;
-        else sy[i].semester3 = new semester;
+    string line;
+    while (getline(fin, line)) {
+        stringstream split(line);
+        string sy_name, sem1, sem2, sem3;
+        getline(split, sy_name, ' ');
+        getline(split, sem1, ' ');
+        getline(split, sem2, ' ');
+        getline(split, sem3, ' ');
+        sy[i].SchoolYearName = sy_name;
+        sy[i].semester1 = (sem1 == "0") ? nullptr : new semester;
+        sy[i].semester2 = (sem2 == "0") ? nullptr : new semester;
+        sy[i].semester3 = (sem3 == "0") ? nullptr : new semester;
         ++i;
     }
     numOfSchoolYear = i;
@@ -28,7 +30,7 @@ void createNewSchoolYear(SchoolYear *&sy, int &numOfSchoolYear) {
 
 void exportSchoolYear(SchoolYear *sy, int numOfSchoolYear, ofstream &fout) {
     for (int i = 0; i < numOfSchoolYear; ++i) {
-        fout << sy[i].SchoolYearName << endl;
+        fout << sy[i].SchoolYearName <<" ";
         if (!sy[i].semester1) fout << "0 ";
         else fout << "1 ";
         if (!sy[i].semester2) fout << "0 ";
@@ -40,7 +42,8 @@ void exportSchoolYear(SchoolYear *sy, int numOfSchoolYear, ofstream &fout) {
 
 void importClass(classes_node *&head, ifstream &fin) {
     classes_node *cur;
-    while (!fin.eof()) {
+    string line;
+    while (getline(fin, line)) {
         if (!head) {
             head = new classes_node;
             cur = head;
@@ -48,7 +51,7 @@ void importClass(classes_node *&head, ifstream &fin) {
             cur->next = new classes_node;
             cur = cur->next;
         }
-        getline(fin, cur->data.class_name);
+        cur->data.class_name = line;
         cur->next = nullptr;
     }
 }

@@ -1,11 +1,11 @@
 #include "Menu.h"
 
 struct score {
-    int total,final,midterm,other;
+    int total, final, midterm, other;
 };
 
 struct student {
-    int No,ID;
+    int No, ID;
     string first_name, last_name, date_of_birth;
     bool isMale;
     int social_id;
@@ -15,7 +15,6 @@ struct student {
 struct student_node {
     student data;
     student_node *next;
-    student_node() : data(), next(nullptr) {}
 };
 
 struct course {
@@ -26,7 +25,6 @@ struct course {
     string class_name;
     string teacher_name;
     student_node *head;
-    course() : course_id(), num_of_credit(), max_student(), day_of_week(), session(), course_name(), class_name(), teacher_name(), head(nullptr) {}
 };
 
 struct course_node {
@@ -54,7 +52,7 @@ struct classes_node {
     classes_node *next;
 };
 
-void importSchoolYear(SchoolYear *&sy, ifstream &fin, int numOfSchoolYear);
+void importSchoolYear(SchoolYear *&sy, ifstream &fin, int &numOfSchoolYear);
 
 void createNewSchoolYear(SchoolYear *&sy, int &numOfSchoolYear);
 
@@ -68,9 +66,9 @@ void exportClass(classes_node *head, ofstream &fout);
 
 void addStudentToClass(classes &c, ifstream &fin); //câu 3
 
-void createSemester(SchoolYear*& sy, semester*& current_sem, bool isAdmin); //câu 6
+void createSemester(SchoolYear *&sy, semester *&current_sem); //câu 6
 
-void addCourse(semester* sem); //câu 7 (trong semester có course rồi nên update cái đó nha :v)
+void addCourse(semester *&current_sem); //câu 7 (trong semester có course rồi nên update cái đó nha :v)
 
 void importStudenttoCourse(course &courses, ifstream &fin); //câu 8
 
@@ -78,4 +76,8 @@ void viewListofCourse(course_node *head); //câu 9
 
 void addStudentToCourse(course_node *courses, int course_id, student_node *new_student);
 
-int getStudentCount(student_node *head) ;
+int getStudentCount(student_node *head);
+
+void addStudentToCourse(course_node *courses, int course_id, student_node *new_student);
+
+int getStudentCount(student_node *head);

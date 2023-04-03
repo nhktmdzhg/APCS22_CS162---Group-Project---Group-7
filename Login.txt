@@ -1,3 +1,7 @@
-admin admin true
-nguyen.huu.nha toiyeuly2 true
-nguly2 hahaha false
+admin admin 1
+Nguyen Van A
+principle admin 1
+Tran Thi B
+nguyen.huu.nha toiyeuly2 1
+Nguyen Huu Nha
+22125045 18022004 0

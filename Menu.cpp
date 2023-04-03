@@ -12,5 +12,6 @@ void show_menu(User_node *current_user) {
         cout << "8. Add a course." << endl;
         cout << "9. Upload student enrolled in the course." << endl;
         cout << "10. View the list of course." << endl;
+        cout << "11. Quit the program." << endl;
     }
 }

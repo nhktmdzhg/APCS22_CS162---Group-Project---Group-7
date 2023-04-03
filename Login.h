@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -8,13 +9,12 @@ struct User {
     string username;
     string password;
     bool isAdmin;
-    User() : username(), password(), isAdmin(false) {}
+    string adminName;
 };
 
 struct User_node {
     User data;
     User_node *next;
-    User_node() : data(), next(nullptr) {}
 };
 
 void import_login_data (User_node *&users, ifstream &fin);
