@@ -12,7 +12,8 @@ void importStudenttoCourse(course& courses, ifstream& fin) {
 	getline(fin, courses.teacher_name);
 	courses.head = new student_node;
 	student_node* cur = courses.head;
-	while (!fin.eof()) {
+	string line;
+	while (getline(fin, line)) {
 		fin >> cur->data.No;
 		fin >> cur->data.ID;
 		getline(fin, cur->data.first_name);
