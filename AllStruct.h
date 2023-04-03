@@ -74,6 +74,8 @@ void importStudenttoCourse(course &courses, ifstream &fin); //câu 8
 
 void viewListofCourse(course_node *head); //câu 9
 
+void delete_Course(semester& sem, int course_id); //câu 13
+
 void addStudentToCourse(course_node *courses, int course_id, student_node *new_student);
 
 int getStudentCount(student_node *head);
