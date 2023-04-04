@@ -5,36 +5,46 @@ struct score {
 };
 
 struct student {
-    int No, ID;
+    string No, ID;
     string first_name, last_name, date_of_birth;
     bool isMale;
-    int social_id;
+    string social_id;
     score s;
 };
 
 struct student_node {
     student data;
     student_node *next;
+
+    student_node() : data(), next(nullptr) {}
 };
 
 struct course {
-    int course_id, num_of_credit, max_student;
-    int day_of_week;//Monday is 1 and Saturday is 6
+    int num_of_credit, max_student;
+    string day_of_week;
     int session;
     string course_name;
+    string course_id;
     string class_name;
     string teacher_name;
     student_node *head;
+
+    course() : num_of_credit(), max_student(50), day_of_week(), session(), course_name(), course_id(), class_name(), teacher_name(),
+        head(nullptr) {}
 };
 
 struct course_node {
     course data;
     course_node *next;
+
+    course_node() : data(), next(nullptr) {}
 };
 
 struct semester {
     int sd_day, sd_month, sd_year, ed_day, ed_month, ed_year;
     course_node *head;
+
+    semester() : sd_day(), sd_month(), sd_year(), ed_day(), ed_month(), ed_year(), head(nullptr) {}
 };
 
 struct SchoolYear {
@@ -50,6 +60,8 @@ struct classes {
 struct classes_node {
     classes data;
     classes_node *next;
+
+    classes_node() : data(), next(nullptr) {}
 };
 
 void importSchoolYear(SchoolYear *&sy, ifstream &fin, int &numOfSchoolYear);
@@ -58,28 +70,32 @@ void createNewSchoolYear(SchoolYear *&sy, int &numOfSchoolYear);
 
 void exportSchoolYear(SchoolYear *sy, int numOfSchoolYear, ofstream &fout);
 
+void deleteSemester(SchoolYear &sy);
+
 void importClass(classes_node *&head, ifstream &fin);
 
-void addNewClass(classes_node *&head); //câu 2
+void addNewClass(classes_node *&head);
 
 void exportClass(classes_node *head, ofstream &fout);
 
-void addStudentToClass(classes &c, ifstream &fin); //câu 3
+void deleteClass(classes_node *&head);
 
-void createSemester(SchoolYear *&sy, semester *&current_sem); //câu 6
+void addStudentToClass(classes &c, ifstream &fin);
 
-void addCourse(semester *&current_sem); //câu 7 (trong semester có course rồi nên update cái đó nha :v)
+void deleteStudent(student_node *&head);
 
-void importStudenttoCourse(course &courses, ifstream &fin); //câu 8
+void createSemester(SchoolYear *&sy, semester *&current_sem, int numOfSchoolYear);
 
-void viewListofCourse(course_node *head); //câu 9
+void addCourse(semester *&current_sem);
 
 void delete_Course(semester& sem, int course_id); //câu 13
 
-void addStudentToCourse(course_node *courses, int course_id, student_node *new_student);
+void deleteCourse(course_node *&head);
 
-int getStudentCount(student_node *head);
+void importStudenttoCourse(course &courses, ifstream &fin);
 
-void addStudentToCourse(course_node *courses, int course_id, student_node *new_student);
+void viewListofCourse(course_node *head);
+
+void addStudentToCourse(course_node *courses, string course_id, student_node *new_student);
 
 int getStudentCount(student_node *head);

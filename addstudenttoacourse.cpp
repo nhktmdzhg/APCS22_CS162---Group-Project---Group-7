@@ -1,8 +1,9 @@
 
 #include"AllStruct.h"
-void addStudentToCourse(course_node *courses, int course_id, student_node *new_student) {
+
+void addStudentToCourse(course_node *courses, string course_id, student_node *new_student) {
     course_node *cur_course = courses;
- 
+
     while (cur_course) {
         if (cur_course->data.course_id == course_id) {
 
@@ -24,16 +25,14 @@ void addStudentToCourse(course_node *courses, int course_id, student_node *new_s
         }
         cur_course = cur_course->next;
     }
-    
+
     cout << "Error: Course not found." << endl;
 }
 
-int getStudentCount(student_node *head) 
-{
+int getStudentCount(student_node *head) {
     int count = 0;
     student_node *cur_student = head;
-    while (cur_student != nullptr) 
-	{
+    while (cur_student != nullptr) {
         count++;
         cur_student = cur_student->next;
     }

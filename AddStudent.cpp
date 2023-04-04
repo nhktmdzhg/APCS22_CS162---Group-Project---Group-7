@@ -4,7 +4,7 @@ void addStudentToClass(classes &c, ifstream &fin) {
     fin.open(c.class_name + ".csv");
     student_node *cur;
     string line;
-    while (getline(fin,line)) {
+    while (getline(fin, line)) {
         //tạo node mới
         if (!c.head) {
             c.head = new student_node;
@@ -16,11 +16,11 @@ void addStudentToClass(classes &c, ifstream &fin) {
         stringstream split(line);
         string no, ID, first_name, last_name, gender, dob, social_id;
         //lấy data
-        getline(split,no,',');
-        cur->data.No = stoi(no);
+        getline(split, no, ',');
+        cur->data.No = no;
 
         getline(split, ID, ',');
-        cur->data.ID = stoi(ID);
+        cur->data.ID = ID;
 
         getline(split, first_name, ',');
         cur->data.first_name = first_name;
@@ -35,7 +35,7 @@ void addStudentToClass(classes &c, ifstream &fin) {
         cur->data.date_of_birth = dob;
 
         getline(split, social_id);
-        cur->data.social_id = stoi(social_id);
+        cur->data.social_id = social_id;
 
         cur->next = nullptr;
     }

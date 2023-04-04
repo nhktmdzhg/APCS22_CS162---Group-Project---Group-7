@@ -1,82 +1,108 @@
 #include "AllStruct.h"
-#include "Login.h"
-#include <string>
 
 using namespace std;
 
-void addCourse(semester* sem) {
-    cout << "Enter the start date (day month year): ";
-    cin >> sem->sd_day >> sem->sd_month >> sem->sd_year;
-    cout << "Enter the end date (day month year): ";
-    cin >> sem->ed_day >> sem->ed_month >> sem->ed_year;
-    cout << "Total courses: ";
-    int n;
-    cin >> n;
-    cout << endl;
-    course_node *cur = new course_node;
-    sem->head = cur;
-    for(int i = 0; i < n; i++) {
-        cout << "Enter course information:" << endl;
-        cout << "Course name: ";
-        cin.ignore(); 
-        getline(cin, cur->data.course_name);
-        cout << "Course ID: ";
-        cin >> cur->data.course_id;
-        cin.ignore();
-        cout << "Teacher of the course: ";
-        getline(cin, cur->data.teacher_name);
-        cout << "Class name: ";
-        getline(cin, cur->data.class_name);
-        cout << "Number of course credits: ";
-        cin >> cur->data.num_of_credit;
-        cout << "Maximum number of students: ";
-        cin >> cur->data.max_student;
-        cout << "Session: ";
-        cin >> cur->data.session;
-        cout << "Day of the week (Monday-Saturday): ";
-        string day;
-        cin.ignore();
-        getline(cin, day);
-        if (day == "Monday") cur->data.day_of_week = 1;
-        else if (day == "Tuesday") cur->data.day_of_week = 2;
-        else if (day == "Wednesday") cur->data.day_of_week = 3;
-        else if (day == "Thursday") cur->data.day_of_week = 4;
-        else if (day == "Friday") cur->data.day_of_week = 5;
-        else if (day == "Saturday") cur->data.day_of_week = 6;        
-        cout << "Course has been added." << endl;
-        cur->next = nullptr; 
-        if(i != n - 1) {
-            course_node *next_course = new course_node;
-            cur->next = next_course;
-            cur = next_course;
-        }
+void addCourse(semester *&current_sem) {
+    course_node *cur;
+    if(!current_sem->head) {
+        current_sem->head = new course_node;
+        cur = current_sem->head;
+    } else {
+        cur = current_sem->head;
+        while (cur->next) cur = cur->next;
+        cur->next = new course_node;
+        cur = cur->next;
     }
+    cout << "Enter course information:" << endl;
+    cout << "Course name: ";
+    cin.ignore();
+    getline(cin, cur->data.course_name);
+    cout << "Course ID: ";
+    getline(cin, cur->data.course_id);
+    cout << "Teacher of the course: ";
+    getline(cin, cur->data.teacher_name);
+    cout << "Class name: ";
+    getline(cin, cur->data.class_name);
+    cout << "Number of course credits: ";
+    cin >> cur->data.num_of_credit;
+    cout << "Maximum number of students: ";
+    cin >> cur->data.max_student;
+    cout << "Session: S";
+    cin >> cur->data.session;
+    cout << "Day of the week (Monday-Saturday): ";
+    cin.ignore();
+    getline(cin, cur->data.day_of_week);
+    cout << "Course has been added." << endl;
+    cur->next = nullptr;
 }
 
-void createSemester(SchoolYear*& sy, semester*& current_sem, bool isAdmin) {
-    if (!isAdmin) {
-        cout << "Access denied. Only admins can create a new school year." << endl;
-        return;
+void createSemester(SchoolYear *&sy, semester *&current_sem, int numOfSchoolYear) {
+    cout << "Input semester you want to create: ";
+    int z;
+    cin >> z;
+    int sd_d, sd_m, sd_y;
+    cout << "Input start date of semester (day month year): ";
+    cin >> sd_d >> sd_m >> sd_y;
+    int ed_d, ed_m, ed_y;
+    cout << "Input end date of semester (day month year): ";
+    cin >> ed_d >> ed_m >> ed_y;
+    cout << "Input school year: ";
+    string sy_name;
+    cin.ignore();
+    getline(cin, sy_name);
+    for (int i = 0; i < numOfSchoolYear; i++) {
+        if (sy[i].SchoolYearName == sy_name) {
+            switch (z) {
+                case 1:
+                    if (sy[i].semester1)
+                        cout << "Semester 1 is created before." << endl;
+                    else {
+                        sy[i].semester1 = new semester;
+                        sy[i].semester1->sd_day = sd_d;
+                        sy[i].semester1->sd_month = sd_m;
+                        sy[i].semester1->sd_year = sd_y;
+                        sy[i].semester1->ed_day = ed_d;
+                        sy[i].semester1->ed_month = ed_m;
+                        sy[i].semester1->ed_year = ed_y;
+                        current_sem = sy[i].semester1;
+                        cout << "Semester 1 is created." << endl;
+                    }
+                    break;
+                case 2:
+                    if (sy[i].semester2)
+                        cout << "Semester 2 is created before." << endl;
+                    else {
+                        sy[i].semester2 = new semester;
+                        sy[i].semester2->sd_day = sd_d;
+                        sy[i].semester2->sd_month = sd_m;
+                        sy[i].semester2->sd_year = sd_y;
+                        sy[i].semester2->ed_day = ed_d;
+                        sy[i].semester2->ed_month = ed_m;
+                        sy[i].semester2->ed_year = ed_y;
+                        current_sem = sy[i].semester2;
+                        cout << "Semester 2 is created." << endl;
+                    }
+                    break;
+                case 3:
+                    if (sy[i].semester3)
+                        cout << "Semester 3 is created before." << endl;
+                    else {
+                        sy[i].semester3 = new semester;
+                        sy[i].semester3->sd_day = sd_d;
+                        sy[i].semester3->sd_month = sd_m;
+                        sy[i].semester3->sd_year = sd_y;
+                        sy[i].semester3->ed_day = ed_d;
+                        sy[i].semester3->ed_month = ed_m;
+                        sy[i].semester3->ed_year = ed_y;
+                        current_sem = sy[i].semester3;
+                        cout << "Semester 3 is created." << endl;
+                    }
+                    break;
+                default:
+                    cout << "Invalid semester." << endl;
+            }
+            return;
+        }
     }
-    sy = new SchoolYear;
-    cout << "Enter the school year name: ";
-    getline(cin, sy->SchoolYearName);
-    int i = 0;
-    while (i < 4) {
-        if (i == 0) cout << "First year:" << endl;
-        else if (i == 1) cout << "Second year:" << endl;
-        else if (i == 2) cout << "Third year:" << endl;
-        else if (i == 3) cout << "Fourth year:" << endl;
-        sy->semester1 = new semester;
-        sy->semester2 = new semester;
-        sy->semester3 = new semester;
-        cout << "Creating Semester 1..." << endl;
-        addCourse(&sy->semester1[i]);
-        cout << "Creating Semester 2..." << endl;
-        addCourse(&sy->semester2[i]);
-        cout << "Creating Semester 3..." << endl;
-        addCourse(&sy->semester3[i]);
-        i++;
-    }
-    cout << "New school year created successfully." << endl;
+    cout << "Invalid school year." << endl;
 }

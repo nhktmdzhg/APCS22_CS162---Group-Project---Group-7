@@ -9,7 +9,7 @@ void importSchoolYear(SchoolYear *&sy, ifstream &fin, int &numOfSchoolYear) {
         getline(split, sy_name, ' ');
         getline(split, sem1, ' ');
         getline(split, sem2, ' ');
-        getline(split, sem3, ' ');
+        getline(split, sem3);
         sy[i].SchoolYearName = sy_name;
         sy[i].semester1 = (sem1 == "0") ? nullptr : new semester;
         sy[i].semester2 = (sem2 == "0") ? nullptr : new semester;
@@ -21,6 +21,7 @@ void importSchoolYear(SchoolYear *&sy, ifstream &fin, int &numOfSchoolYear) {
 
 void createNewSchoolYear(SchoolYear *&sy, int &numOfSchoolYear) {
     cout << "Input school year you want to create: ";
+    cin.ignore();
     getline(cin, sy[numOfSchoolYear].SchoolYearName);
     sy[numOfSchoolYear].semester1 = nullptr;
     sy[numOfSchoolYear].semester2 = nullptr;
@@ -30,7 +31,7 @@ void createNewSchoolYear(SchoolYear *&sy, int &numOfSchoolYear) {
 
 void exportSchoolYear(SchoolYear *sy, int numOfSchoolYear, ofstream &fout) {
     for (int i = 0; i < numOfSchoolYear; ++i) {
-        fout << sy[i].SchoolYearName <<" ";
+        fout << sy[i].SchoolYearName << " ";
         if (!sy[i].semester1) fout << "0 ";
         else fout << "1 ";
         if (!sy[i].semester2) fout << "0 ";
@@ -62,6 +63,7 @@ void addNewClass(classes_node *&head) {
     cur->next = new classes_node;
     cur = cur->next;
     cout << "Input class name: ";
+    cin.ignore();
     getline(cin, cur->data.class_name);
     cur->next = nullptr;
 }

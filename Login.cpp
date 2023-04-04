@@ -24,7 +24,7 @@ void import_login_data(User_node *&users, ifstream &fin) {
         cur->data.password = password;
         cur->data.isAdmin = (isAdminStr == "1");
 
-        if (cur->data.isAdmin) getline(fin,cur->data.adminName);
+        if (cur->data.isAdmin) getline(fin, cur->data.adminName);
 
         cur->next = nullptr;
     }
@@ -72,7 +72,7 @@ void change_password(User_node *&current_user) {
         cin >> check_new_password;
     }
     current_user->data.password = new_password;
-    cout << "Password changed successfully.";
+    cout << "Password changed successfully." << endl;
 }
 
 void delete_user_data(User_node *&users) {
@@ -86,7 +86,8 @@ void delete_user_data(User_node *&users) {
 
 void export_login_data(User_node *users, ofstream &fout) {
     while (users) {
-        fout << users->data.username << " " << users->data.password << " " << (int)users->data.isAdmin << endl;
+        fout << users->data.username << " " << users->data.password << " " << (int) users->data.isAdmin << endl;
+        if (users->data.isAdmin) fout << users->data.adminName << endl;
         users = users->next;
     }
 }
