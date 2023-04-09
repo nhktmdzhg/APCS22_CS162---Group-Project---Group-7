@@ -2,9 +2,9 @@
 
 using namespace std;
 
-void addCourse(semester *&current_sem) {
+void addCourse(semester *&current_sem, course_node *&added) {
     course_node *cur;
-    if(!current_sem->head) {
+    if (!current_sem->head) {
         current_sem->head = new course_node;
         cur = current_sem->head;
     } else {
@@ -13,6 +13,7 @@ void addCourse(semester *&current_sem) {
         cur->next = new course_node;
         cur = cur->next;
     }
+    added = cur;
     cout << "Enter course information:" << endl;
     cout << "Course name: ";
     cin.ignore();

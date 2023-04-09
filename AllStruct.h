@@ -64,6 +64,8 @@ struct classes_node {
     classes_node() : data(), next(nullptr) {}
 };
 
+void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&current_sem);
+
 void importSchoolYear(SchoolYear *&sy, ifstream &fin, int &numOfSchoolYear);
 
 void createNewSchoolYear(SchoolYear *&sy, int &numOfSchoolYear);
@@ -86,7 +88,9 @@ void deleteStudent(student_node *&head);
 
 void createSemester(SchoolYear *&sy, semester *&current_sem, int numOfSchoolYear);
 
-void addCourse(semester *&current_sem);
+void addCourse(semester *&current_sem, course_node *&added);
+
+void importStudenttoCourse(course &courses, ifstream &fin);
 
 void delete_Course(semester& sem, int course_id); //câu 13
 
@@ -96,6 +100,10 @@ void importStudenttoCourse(course &courses, ifstream &fin);
 
 void viewListofCourse(course_node *head);
 
-void addStudentToCourse(course_node *courses, string course_id, student_node *new_student);
-
 int getStudentCount(student_node *head);
+
+void updateCourseIn4(course_node *courses, string course_id); //cau 10
+
+void viewStudentCourse(string student_id, course_node *courses); // cau 14
+
+void viewListOfClass(classes_node *Classes); // cau 15

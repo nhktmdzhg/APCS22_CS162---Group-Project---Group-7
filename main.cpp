@@ -32,10 +32,36 @@ int main() {
         if (class_cur->next) class_cur = class_cur->next;
         else break;
     }
-
-    semester *current_sem;
-
     int choice;
+    semester *current_sem = nullptr;
+    if (current_user->data.isAdmin) {
+        do {
+            menuSchoolYearAndSem();
+            cout << "Please input your choice: ";
+            cin >> choice;
+            if (choice == 4) {
+                ofstream schoolYear_out;
+                schoolYear_out.open("School year.txt", ofstream::out | ofstream::trunc);
+                createNewSchoolYear(sy, num_of_sy);
+                exportSchoolYear(sy, num_of_sy, schoolYear_out);
+                schoolYear_out.close();
+            } else if (choice == 5) {
+                createSemester(sy, current_sem, num_of_sy);
+                ofstream schoolYear_out;
+                schoolYear_out.open("School year.txt", ofstream::out | ofstream::trunc);
+                exportSchoolYear(sy, num_of_sy, schoolYear_out);
+                schoolYear_out.close();
+            } else if (choice == 6) {
+                choose_current_sem(sy, num_of_sy, current_sem);
+            } else
+                cout << "Wrong choice, choose again." << endl;
+        } while (choice != 3 && !current_sem);
+    }
+
+
+    course_node *added;
+
+
     do {
         show_menu(current_user);
         cout << "Please input your choice: ";
@@ -52,21 +78,13 @@ int main() {
             break;
         else if (choice == 4) {
             if (current_user->data.isAdmin) {
-                ofstream schoolYear_out;
-                schoolYear_out.open("School year.txt", ofstream::out | ofstream::trunc);
-                createNewSchoolYear(sy, num_of_sy);
-                exportSchoolYear(sy, num_of_sy, schoolYear_out);
-                schoolYear_out.close();
-            }
-        } else if (choice == 5) {
-            if (current_user->data.isAdmin) {
                 ofstream class_out;
                 class_out.open("Class.txt", ofstream::out | ofstream::trunc);
                 addNewClass(Classes);
                 exportClass(Classes, class_out);
                 class_out.close();
             }
-        } else if (choice == 6) {
+        } else if (choice == 5) {
             if (current_user->data.isAdmin) {
                 class_cur = class_cur->next;
                 while (true) {
@@ -77,22 +95,23 @@ int main() {
                 }
                 cout << "1st year student is added from file." << endl;
             }
+        } else if (choice == 6) {
+            if (current_user->data.isAdmin) {
+                addCourse(current_sem, added);
+            }
         } else if (choice == 7) {
             if (current_user->data.isAdmin) {
-                createSemester(sy, current_sem, num_of_sy);
-                ofstream schoolYear_out;
-                schoolYear_out.open("School year.txt", ofstream::out | ofstream::trunc);
-                exportSchoolYear(sy, num_of_sy, schoolYear_out);
-                schoolYear_out.close();
+                ifstream course_in;
+                importStudenttoCourse(added->data, course_in);
+                course_in.close();
             }
         } else if (choice == 8) {
             if (current_user->data.isAdmin) {
-                addCourse(current_sem);
+                viewListofCourse(current_sem->head);
             }
-        }
-        else
+        } else
             cout << "Wrong choice, choose again." << endl;
-    } while (choice != 11 && choice != 3);
+    } while (choice != 3);
     delete_user_data(users);
     class_cur = Classes;
     while (class_cur) {
