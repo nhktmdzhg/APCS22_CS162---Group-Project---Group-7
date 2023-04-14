@@ -106,4 +106,4 @@ void updateCourseIn4(course_node *courses, string course_id); //cau 10
 
 void viewStudentCourse(string student_id, course_node *courses); // cau 14
 
-void viewListOfClass(classes_node *Classes); // cau 15
+void viewListOfClass(classes_node *Classes); // cau 15  
