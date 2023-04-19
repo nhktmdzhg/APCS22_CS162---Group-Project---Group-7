@@ -9,7 +9,8 @@ void importStudenttoCourse(course &courses, ifstream &fin) {
         if (!courses.head) {
             courses.head = new student_node;
             cur = courses.head;
-        } else {
+        } else 
+		{
             cur->next = new student_node;
             cur = cur->next;
         }
