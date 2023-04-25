@@ -29,8 +29,10 @@ struct course {
     string teacher_name;
     student_node *head;
 
-    course() : num_of_credit(), max_student(50), day_of_week(), session(), course_name(), course_id(), class_name(), teacher_name(),
-        head(nullptr) {}
+    course()
+            : num_of_credit(), max_student(50), day_of_week(), session(), course_name(), course_id(), class_name(),
+              teacher_name(),
+              head(nullptr) {}
 };
 
 struct course_node {
@@ -92,7 +94,7 @@ void addCourse(semester *&current_sem, course_node *&added);
 
 void importStudenttoCourse(course &courses, ifstream &fin);
 
-void delete_Course(semester& sem, int course_id); //câu 13
+void delete_Course(semester &sem, int course_id); //câu 13
 
 void deleteCourse(course_node *&head);
 
@@ -106,4 +108,20 @@ void updateCourseIn4(course_node *courses, string course_id); //cau 10
 
 void viewStudentCourse(string student_id, course_node *courses); // cau 14
 
-void viewListOfClass(classes_node *Classes); // cau 15  
+void viewListOfClass(classes_node *Classes); // cau 15
+
+void viewListOfCourse(semester *current_sem); // cau 17
+
+void viewListOfStudentInCourse(course_node *courses, string course_id); // cau 18
+
+void ExportListOfStudentInCourse(ofstream &fout, course_node *courses, string course_id); // cau 19
+
+void ImportScoreboard(ifstream &fin, course_node *&courses, string course_id); // cau 20
+
+void ViewTheScoreboardOfCourse(course_node *&courses, string course_id); // cau 21
+
+void updateStudentResult(string student_id, string course_id, course_node *&courses); // cau 22
+
+void viewScoreboardOfClass(string class_name, course_node *courses); // cau 23
+
+void viewStudentScoreboard(string student_id, course_node *courses); // cau 24
