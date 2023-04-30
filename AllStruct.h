@@ -1,7 +1,7 @@
 #include "Menu.h"
 
 struct score {
-    int total, final, midterm, other;
+    float total, final, midterm, other;
 };
 
 struct student {
