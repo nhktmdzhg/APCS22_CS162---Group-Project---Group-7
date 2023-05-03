@@ -118,7 +118,7 @@ void ExportListOfStudentInCourse(ofstream &fout, course_node *courses, string co
 
 void ImportScoreboard(ifstream &fin, course_node *&courses, string course_id); // cau 20
 
-void ViewTheScoreboardOfCourse(course_node *&courses, string course_id); // cau 21
+void ViewTheScoreboardOfCourse(course_node *courses, string course_id); // cau 21
 
 void updateStudentResult(string student_id, string course_id, course_node *&courses); // cau 22
 
