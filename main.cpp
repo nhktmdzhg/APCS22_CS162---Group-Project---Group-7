@@ -63,23 +63,16 @@ int main() {
                 exportSchoolYear(sy, num_of_sy, schoolYear_out);
                 schoolYear_out.close();
             } else if (choice == 6) {
-                choose_current_sem(sy, num_of_sy, current_sem);
+                choose_current_sem(sy, num_of_sy, current_sem, cur_sem);
             } else
                 cout << "Wrong choice, choose again." << endl;
         } while (choice != 3 && !current_sem);
     } else {
         SchoolYear current_sy = sy[num_of_sy - 1];
-        for (int i = 3; i >= 1; i--) {
-            if (i == 3 && current_sy.semester3 != nullptr) {
-                current_sem = current_sy.semester3;
-                break;
-            }
-            if (i == 2 && current_sy.semester2 != nullptr) {
-                current_sem = current_sy.semester2;
-                break;
-            }
-            if (i == 1 && current_sy.semester1 != nullptr) {
-                current_sem = current_sy.semester1;
+        for (int i = 2; i >= 0; i--) {
+            if (sy[num_of_sy - 1].semester[i] != nullptr) {
+                current_sem = sy[num_of_sy - 1].semester[i];
+                cur_sem = i + 1;
                 break;
             }
         }

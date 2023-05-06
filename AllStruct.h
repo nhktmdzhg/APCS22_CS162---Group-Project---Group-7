@@ -70,7 +70,7 @@ struct classes_node {
     classes_node() : data(), next(nullptr) {}
 };
 
-void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&current_sem);
+void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&current_sem, int &cur_sem);
 
 void importSchoolYear(SchoolYear *&sy, ifstream &fin, int &numOfSchoolYear);
 

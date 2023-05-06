@@ -73,7 +73,7 @@ void exportClass(classes_node *head, ofstream &fout) {
     }
 }
 
-void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&current_sem) {
+void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&current_sem, int &cur_sem) {
     cout << "Please input school year: ";
     string sy_in;
     cin.ignore();
@@ -86,8 +86,10 @@ void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&curren
             if (sem >= 1 && sem <= 3) {
                 if (sy[i].semester[sem - 1] == nullptr)
                     cout << "Semester 1 isn't created before." << endl;
-                else
+                else {
                     current_sem = sy[i].semester[sem - 1];
+                    cur_sem = sem;
+                }
             } else
                 cout << "Invalid semester" << endl;
             return;
