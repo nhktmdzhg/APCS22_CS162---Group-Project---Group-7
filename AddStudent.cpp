@@ -41,3 +41,21 @@ void addStudentToClass(classes &c, ifstream &fin) {
     }
     fin.close();
 }
+
+void createNewStudentAccount(student_node *students, User_node *users) {
+    User_node *cur;
+    if (users == nullptr) {
+        users = new User_node;
+        cur = users;
+    } else {
+        cur = users;
+        while (cur->next != nullptr)
+            cur = cur->next;
+    }
+    cur->data.username = students->data.ID;
+    cur->data.password = students->data.date_of_birth;
+    cur->data.isAdmin = false;
+    cur->data.Name = students->data.first_name + " " + students->data.last_name;
+    string dob = students->data.date_of_birth;
+    cur->data.birthday = dob.substr(0, 2) + "/" + dob.substr(2, 2) + "/" + dob.substr(4, 4);
+}

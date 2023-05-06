@@ -32,14 +32,25 @@ int main() {
         if (class_cur->next) class_cur = class_cur->next;
         else break;
     }
-    int choice;
+    int choice = 0;
     semester *current_sem = nullptr;
+    int cur_sem;
     if (current_user->data.isAdmin) {
         do {
             menuSchoolYearAndSem();
             cout << "Please input your choice: ";
             cin >> choice;
-            if (choice == 4) {
+            if (choice == 1) {
+                view_in4(current_user);
+            } else if (choice == 2) {
+                ofstream login_out;
+                login_out.open("Login.txt", ofstream::out | ofstream::trunc);
+                change_password(current_user);
+                export_login_data(users, login_out);
+                login_out.close();
+            } else if (choice == 3)
+                break;
+            else if (choice == 4) {
                 ofstream schoolYear_out;
                 schoolYear_out.open("School year.txt", ofstream::out | ofstream::trunc);
                 createNewSchoolYear(sy, num_of_sy);
@@ -56,62 +67,126 @@ int main() {
             } else
                 cout << "Wrong choice, choose again." << endl;
         } while (choice != 3 && !current_sem);
+    } else {
+        SchoolYear current_sy = sy[num_of_sy - 1];
+        for (int i = 3; i >= 1; i--) {
+            if (i == 3 && current_sy.semester3 != nullptr) {
+                current_sem = current_sy.semester3;
+                break;
+            }
+            if (i == 2 && current_sy.semester2 != nullptr) {
+                current_sem = current_sy.semester2;
+                break;
+            }
+            if (i == 1 && current_sy.semester1 != nullptr) {
+                current_sem = current_sy.semester1;
+                break;
+            }
+        }
     }
 
 
     course_node *added;
 
-
-    do {
-        show_menu(current_user);
-        cout << "Please input your choice: ";
-        cin >> choice;
-        if (choice == 1) {
-            cout << "This function isn't programed." << endl;
-        } else if (choice == 2) {
-            ofstream login_out;
-            login_out.open("Login.txt", ofstream::out | ofstream::trunc);
-            change_password(current_user);
-            export_login_data(users, login_out);
-            login_out.close();
-        } else if (choice == 3)
-            break;
-        else if (choice == 4) {
-            if (current_user->data.isAdmin) {
-                ofstream class_out;
-                class_out.open("Class.txt", ofstream::out | ofstream::trunc);
-                addNewClass(Classes);
-                exportClass(Classes, class_out);
-                class_out.close();
-            }
-        } else if (choice == 5) {
-            if (current_user->data.isAdmin) {
-                class_cur = class_cur->next;
-                while (true) {
-                    ifstream addStudent;
-                    addStudentToClass(class_cur->data, addStudent);
-                    if (class_cur->next) class_cur = class_cur->next;
-                    else break;
+    if (choice != 3) {
+        do {
+            show_menu(current_user);
+            cout << "Please input your choice: ";
+            cin >> choice;
+            if (choice == 1)
+                //View info of account
+                view_in4(current_user);
+            else if (choice == 2) {
+                ofstream login_out;
+                login_out.open("Login.txt", ofstream::out | ofstream::trunc);
+                change_password(current_user);
+                export_login_data(users, login_out);//Export to file
+                login_out.close();
+            } else if (choice == 3)
+                break;//Close the program
+            else if (choice == 4) {
+                if (current_user->data.isAdmin) {
+                    ofstream class_out;
+                    class_out.open("Class.txt", ofstream::out | ofstream::trunc);
+                    addNewClass(Classes);
+                    exportClass(Classes, class_out);
+                    class_out.close();
                 }
-                cout << "1st year student is added from file." << endl;
-            }
-        } else if (choice == 6) {
-            if (current_user->data.isAdmin) {
-                addCourse(current_sem, added);
-            }
-        } else if (choice == 7) {
-            if (current_user->data.isAdmin) {
-                ifstream course_in;
-                importStudenttoCourse(added->data, course_in);
-                course_in.close();
-            }
-        } else if (choice == 8) {
-            if (current_user->data.isAdmin) {
-                viewListofCourse(current_sem->head);
-            }
-        } else
-            cout << "Wrong choice, choose again." << endl;
-    } while (choice != 3);
+            } else if (choice == 5) {
+                if (current_user->data.isAdmin) {
+                    class_cur = class_cur->next;
+                    while (true) {
+                        ifstream addStudent;
+                        addStudentToClass(class_cur->data, addStudent);//add student to class
+                        //create account for student
+                        student_node *cur = class_cur->data.head;
+                        while (cur) {
+                            createNewStudentAccount(cur, users);
+                            cur = cur->next;
+                        }
+                        //export login data
+                        ofstream login_out;
+                        login_out.open("Login.txt", ofstream::out | ofstream::trunc);
+                        export_login_data(users, login_out);
+                        login_out.close();
+                        if (class_cur->next) class_cur = class_cur->next;
+                        else break;
+                    }
+                    cout << "1st year student is added from file." << endl;
+                }
+            } else if (choice == 6) {
+                if (current_user->data.isAdmin) {
+                    addCourse(current_sem, added);
+                }
+            } else if (choice == 7) {
+                if (current_user->data.isAdmin) {
+                    ifstream course_in;
+                    importStudenttoCourse(added->data, course_in);
+                    course_in.close();
+                }
+            } else if (choice == 8) {
+                if (current_user->data.isAdmin) {
+                    viewListofCourse(current_sem->head);
+                }
+            } else if (choice == 9) {
+                if (current_user->data.isAdmin) {
+                    string course_id;
+                    cout << "Input course id of course you want to update: ";
+                    cin.ignore();
+                    getline(cin, course_id);
+                    updateCourseIn4(current_sem->head, course_id);
+                }
+            } else if (choice == 10) {
+                if (current_user->data.isAdmin) {
+                    student_node *newStudent = nullptr;
+                    cout << "Input course ID: ";
+                    string course_id;
+                    cin.ignore();
+                    getline(cin, course_id);
+                    addStudentToCourse(current_sem->head, course_id, newStudent);
+                }
+            } else if (choice == 11) {
+                if (current_user->data.isAdmin) {
+                    cout << "Input student's ID you want to remove from course:";
+                    string std_id, crs_id;
+                    cin.ignore();
+                    getline(cin, std_id);
+                    cout << "Input course ID: ";
+                    getline(cin, crs_id);
+                    removeStudentFromCourse(current_sem->head, crs_id, std_id);
+                }
+            } else if (choice == 12) {
+                if (current_user->data.isAdmin) {
+                    cout << "Input course id:";
+                    string crs_id;
+                    cin.ignore();
+                    getline(cin, crs_id);
+                    delete_Course(current_sem, crs_id);
+                }
+            } else
+                cout << "Wrong choice, choose again." << endl;
+        } while (true);
+    }
     delete_user_data(users);
     class_cur = Classes;
     while (class_cur) {

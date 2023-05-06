@@ -53,55 +53,22 @@ void createSemester(SchoolYear *&sy, semester *&current_sem, int numOfSchoolYear
     getline(cin, sy_name);
     for (int i = 0; i < numOfSchoolYear; i++) {
         if (sy[i].SchoolYearName == sy_name) {
-            switch (z) {
-                case 1:
-                    if (sy[i].semester1)
-                        cout << "Semester 1 is created before." << endl;
-                    else {
-                        sy[i].semester1 = new semester;
-                        sy[i].semester1->sd_day = sd_d;
-                        sy[i].semester1->sd_month = sd_m;
-                        sy[i].semester1->sd_year = sd_y;
-                        sy[i].semester1->ed_day = ed_d;
-                        sy[i].semester1->ed_month = ed_m;
-                        sy[i].semester1->ed_year = ed_y;
-                        current_sem = sy[i].semester1;
-                        cout << "Semester 1 is created." << endl;
-                    }
-                    break;
-                case 2:
-                    if (sy[i].semester2)
-                        cout << "Semester 2 is created before." << endl;
-                    else {
-                        sy[i].semester2 = new semester;
-                        sy[i].semester2->sd_day = sd_d;
-                        sy[i].semester2->sd_month = sd_m;
-                        sy[i].semester2->sd_year = sd_y;
-                        sy[i].semester2->ed_day = ed_d;
-                        sy[i].semester2->ed_month = ed_m;
-                        sy[i].semester2->ed_year = ed_y;
-                        current_sem = sy[i].semester2;
-                        cout << "Semester 2 is created." << endl;
-                    }
-                    break;
-                case 3:
-                    if (sy[i].semester3)
-                        cout << "Semester 3 is created before." << endl;
-                    else {
-                        sy[i].semester3 = new semester;
-                        sy[i].semester3->sd_day = sd_d;
-                        sy[i].semester3->sd_month = sd_m;
-                        sy[i].semester3->sd_year = sd_y;
-                        sy[i].semester3->ed_day = ed_d;
-                        sy[i].semester3->ed_month = ed_m;
-                        sy[i].semester3->ed_year = ed_y;
-                        current_sem = sy[i].semester3;
-                        cout << "Semester 3 is created." << endl;
-                    }
-                    break;
-                default:
-                    cout << "Invalid semester." << endl;
-            }
+            if (z >= 1 && z <= 3) {
+                if (sy[i].semester[z - 1])
+                    cout << "Semester " << z << " is created before." << endl;
+                else {
+                    sy[i].semester[z - 1] = new semester;
+                    sy[i].semester[z - 1]->sd_day = sd_d;
+                    sy[i].semester[z - 1]->sd_month = sd_m;
+                    sy[i].semester[z - 1]->sd_year = sd_y;
+                    sy[i].semester[z - 1]->ed_day = ed_d;
+                    sy[i].semester[z - 1]->ed_month = ed_m;
+                    sy[i].semester[z - 1]->ed_year = ed_y;
+                    current_sem = sy[i].semester[z - 1];
+                    cout << "Semester " << z << " is created." << endl;
+                }
+            } else
+                cout << "Invalid semester." << endl;
             return;
         }
     }

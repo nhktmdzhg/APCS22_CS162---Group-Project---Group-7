@@ -24,7 +24,8 @@ void import_login_data(User_node *&users, ifstream &fin) {
         cur->data.password = password;
         cur->data.isAdmin = (isAdminStr == "1");
 
-        if (cur->data.isAdmin) getline(fin, cur->data.adminName);
+        getline(fin, cur->data.adminName);
+        getline(fin, cur->data.birthday);
 
         cur->next = nullptr;
     }
@@ -87,7 +88,13 @@ void delete_user_data(User_node *&users) {
 void export_login_data(User_node *users, ofstream &fout) {
     while (users) {
         fout << users->data.username << " " << users->data.password << " " << (int) users->data.isAdmin << endl;
-        if (users->data.isAdmin) fout << users->data.adminName << endl;
+        fout << users->data.Name << endl;
+        fout << users->data.birthday << endl;
         users = users->next;
     }
+}
+
+void view_in4(User_node *current_user) {
+    cout << "Name: " << current_user->data.Name << endl;
+    cout << "Birthday: " << current_user->data.birthday << endl;
 }

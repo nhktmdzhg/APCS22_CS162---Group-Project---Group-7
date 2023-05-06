@@ -1,14 +1,10 @@
 #include"AllStruct.h"
 
-void updateCourseIn4(course_node *courses, string course_id) 
-{
+void updateCourseIn4(course_node *courses, string course_id) {
     course_node *cur = courses;
-    while (cur != nullptr && cur->data.course_id != course_id) 
-	{
+    while (cur != nullptr && cur->data.course_id != course_id)
         cur = cur->next;
-    }
-    if (cur == nullptr) 
-	{
+    if (cur == nullptr) {
         cout << "Course not found." << endl;//ko tim thay va cut ngay
         return;
     }

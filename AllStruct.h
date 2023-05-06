@@ -2,6 +2,8 @@
 
 struct score {
     float total, final, midterm, other;
+
+    score() : total(-1), final(-1), midterm(-1), other(-1) {}
 };
 
 struct student {
@@ -10,6 +12,8 @@ struct student {
     bool isMale;
     string social_id;
     score s;
+
+    student() : No(), ID(), first_name(), last_name(), date_of_birth(), isMale(), social_id(), s() {}
 };
 
 struct student_node {
@@ -51,7 +55,7 @@ struct semester {
 
 struct SchoolYear {
     string SchoolYearName;
-    semester *semester1, *semester2, *semester3;
+    semester *semester[3];
 };
 
 struct classes {
@@ -86,25 +90,33 @@ void deleteClass(classes_node *&head);
 
 void addStudentToClass(classes &c, ifstream &fin);
 
+void createNewStudentAccount(student_node *students, User_node *users);
+
 void deleteStudent(student_node *&head);
 
 void createSemester(SchoolYear *&sy, semester *&current_sem, int numOfSchoolYear);
+
+void importCourseToSemester(SchoolYear sy, int sem, ifstream &fin);
 
 void addCourse(semester *&current_sem, course_node *&added);
 
 void importStudenttoCourse(course &courses, ifstream &fin);
 
-void delete_Course(semester &sem, int course_id); //câu 13
+void exportStudentOfCourse(course course, ofstream &fout);
 
-void deleteCourse(course_node *&head);
+void delete_Course(semester *sem, string course_id); //câu 13
 
-void importStudenttoCourse(course &courses, ifstream &fin);
+void deleteAllCourse(course_node *&head);
 
 void viewListofCourse(course_node *head);
 
 int getStudentCount(student_node *head);
 
 void updateCourseIn4(course_node *courses, string course_id); //cau 10
+
+void addStudentToCourse(course_node *courses, string course_id, student_node *new_student); //cau 11
+
+void removeStudentFromCourse(course_node *courses, string course_id, string student_id); //cau 12
 
 void viewStudentCourse(string student_id, course_node *courses); // cau 14
 

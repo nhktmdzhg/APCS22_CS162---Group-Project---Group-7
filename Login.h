@@ -9,7 +9,8 @@ struct User {
     string username;
     string password;
     bool isAdmin;
-    string adminName;
+    string Name;
+    string birthday;
 };
 
 struct User_node {
@@ -26,3 +27,5 @@ void change_password(User_node *&current_user);
 void delete_user_data(User_node *&users);
 
 void export_login_data(User_node *users, ofstream &fout);
+
+void view_in4(User_node *current_user);

@@ -9,8 +9,7 @@ void importStudenttoCourse(course &courses, ifstream &fin) {
         if (!courses.head) {
             courses.head = new student_node;
             cur = courses.head;
-        } else 
-		{
+        } else {
             cur->next = new student_node;
             cur = cur->next;
         }
@@ -31,4 +30,23 @@ void importStudenttoCourse(course &courses, ifstream &fin) {
         cur->next = nullptr;
     }
     fin.close();
+}
+
+void exportStudentOfCourse(course course, ofstream &fout) {
+    fout.open(course.course_id + ".csv");
+    student_node *cur = course.head;
+    while (cur != nullptr) {
+        fout << cur->data.No << ",";
+        fout << cur->data.ID << ",";
+        fout << cur->data.first_name << ",";
+        fout << cur->data.last_name << ",";
+        if (cur->data.isMale)
+            fout << "Male,";
+        else
+            fout << "Female,";
+        fout << cur->data.date_of_birth << ",";
+        fout << cur->data.social_id << endl;
+        cur = cur->next;
+    }
+    fout.close();
 }

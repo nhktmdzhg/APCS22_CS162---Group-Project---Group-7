@@ -5,15 +5,14 @@ void importSchoolYear(SchoolYear *&sy, ifstream &fin, int &numOfSchoolYear) {
     string line;
     while (getline(fin, line)) {
         stringstream split(line);
-        string sy_name, sem1, sem2, sem3;
+        string sy_name, sem[3];
         getline(split, sy_name, ' ');
-        getline(split, sem1, ' ');
-        getline(split, sem2, ' ');
-        getline(split, sem3);
+        getline(split, sem[0], ' ');
+        getline(split, sem[1], ' ');
+        getline(split, sem[2]);
         sy[i].SchoolYearName = sy_name;
-        sy[i].semester1 = (sem1 == "0") ? nullptr : new semester;
-        sy[i].semester2 = (sem2 == "0") ? nullptr : new semester;
-        sy[i].semester3 = (sem3 == "0") ? nullptr : new semester;
+        for (int j = 0; j < 3; j++)
+            sy[i].semester[j] = (sem[j] == "0") ? nullptr : new semester;
         ++i;
     }
     numOfSchoolYear = i;
@@ -23,20 +22,19 @@ void createNewSchoolYear(SchoolYear *&sy, int &numOfSchoolYear) {
     cout << "Input school year you want to create: ";
     cin.ignore();
     getline(cin, sy[numOfSchoolYear].SchoolYearName);
-    sy[numOfSchoolYear].semester1 = nullptr;
-    sy[numOfSchoolYear].semester2 = nullptr;
-    sy[numOfSchoolYear].semester3 = nullptr;
+    for (int i = 0; i < 3; i++)
+        sy[numOfSchoolYear].semester[i] = nullptr;
     ++numOfSchoolYear;
 }
 
 void exportSchoolYear(SchoolYear *sy, int numOfSchoolYear, ofstream &fout) {
     for (int i = 0; i < numOfSchoolYear; ++i) {
         fout << sy[i].SchoolYearName << " ";
-        if (!sy[i].semester1) fout << "0 ";
+        if (!sy[i].semester[0]) fout << "0 ";
         else fout << "1 ";
-        if (!sy[i].semester2) fout << "0 ";
+        if (!sy[i].semester[1]) fout << "0 ";
         else fout << "1 ";
-        if (!sy[i].semester3) fout << "0" << endl;
+        if (!sy[i].semester[2]) fout << "0" << endl;
         else fout << "1" << endl;
     }
 }
@@ -85,30 +83,29 @@ void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&curren
             cout << "Input semester: ";
             int sem;
             cin >> sem;
-            switch (sem) {
-                case 1:
-                    if (!sy[i].semester1)
-                        cout << "Semester 1 isn't created before." << endl;
-                    else
-                        current_sem = sy[i].semester1;
-                    break;
-                case 2:
-                    if (!sy[i].semester2)
-                        cout << "Semester 2 isn't created before." << endl;
-                    else
-                        current_sem = sy[i].semester2;
-                    break;
-                case 3:
-                    if (!sy[i].semester3)
-                        cout << "Semester 3 isn't created before." << endl;
-                    else
-                        current_sem = sy[i].semester3;
-                    break;
-                default:
-                    cout << "Invalid semester." << endl;
-            }
+            if (sem >= 1 && sem <= 3) {
+                if (sy[i].semester[sem - 1] == nullptr)
+                    cout << "Semester 1 isn't created before." << endl;
+                else
+                    current_sem = sy[i].semester[sem - 1];
+            } else
+                cout << "Invalid semester" << endl;
             return;
         }
     }
     cout << "Invalid school year." << endl;
+}
+
+void importCourseToSemester(SchoolYear sy, int sem, ifstream &fin) {
+    course_node *cur;
+    string line;
+    while (getline(fin, line)) {
+        if (!sy.semester[sem - 1]->head) {
+            sy.semester[sem - 1]->head = new course_node;
+            cur = sy.semester[sem - 1]->head;
+        } else {
+            cur->next = new course_node;
+            cur = cur->next;
+        }
+    }
 }

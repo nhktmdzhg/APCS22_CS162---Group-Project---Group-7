@@ -17,15 +17,13 @@ void deleteClass(classes_node *&head) {
 }
 
 void deleteSemester(SchoolYear &sy) {
-    if(sy.semester1) deleteCourse(sy.semester1->head);
-    if(sy.semester2) deleteCourse(sy.semester2->head);
-    if(sy.semester3) deleteCourse(sy.semester3->head);
-    delete sy.semester1;
-    delete sy.semester2;
-    delete sy.semester3;
+    for (int i = 0; i < 3; i++)
+        if (sy.semester[i]) deleteAllCourse(sy.semester[i]->head);
+    for (int i = 0; i < 3; i++)
+        delete sy.semester[i];
 }
 
-void deleteCourse(course_node *&head) {
+void deleteAllCourse(course_node *&head) {
     while (head) {
         course_node *tmp = head;
         head = head->next;
