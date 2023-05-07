@@ -73,7 +73,7 @@ void exportClass(classes_node *head, ofstream &fout) {
     }
 }
 
-void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&current_sem, int &cur_sem) {
+void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&current_sem, int &cur_sem, SchoolYear &cur_sy) {
     cout << "Please input school year: ";
     string sy_in;
     cin.ignore();
@@ -89,6 +89,7 @@ void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&curren
                 else {
                     current_sem = sy[i].semester[sem - 1];
                     cur_sem = sem;
+                    cur_sy = sy[i];
                 }
             } else
                 cout << "Invalid semester" << endl;
@@ -98,16 +99,53 @@ void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&curren
     cout << "Invalid school year." << endl;
 }
 
-void importCourseToSemester(SchoolYear sy, int sem, ifstream &fin) {
-    course_node *cur;
-    string line;
-    while (getline(fin, line)) {
-        if (!sy.semester[sem - 1]->head) {
-            sy.semester[sem - 1]->head = new course_node;
-            cur = sy.semester[sem - 1]->head;
-        } else {
-            cur->next = new course_node;
-            cur = cur->next;
+void importCourseToSemester(SchoolYear &sy, int sem, ifstream &fin, semester *cur_sem) {
+    fin.open(sy.SchoolYearName + "_sem" + to_string(sem) + ".csv");
+    if (fin.good()) {
+        course_node *cur;
+        string line;
+        while (getline(fin, line)) {
+            if (!sy.semester[sem - 1]->head) {
+                sy.semester[sem - 1]->head = new course_node;
+                cur = sy.semester[sem - 1]->head;
+            } else {
+                cur->next = new course_node;
+                cur = cur->next;
+            }
+            stringstream split(line);
+            getline(split, cur->data.course_name, ',');
+            getline(split, cur->data.course_id, ',');
+            getline(split, cur->data.class_name, ',');
+            getline(split, cur->data.teacher_name, ',');
+            getline(split, cur->data.day_of_week, ',');
+            string num_string;
+            getline(split, num_string, ',');
+            cur->data.session = stoi(num_string);
+            getline(split, num_string, ',');
+            cur->data.num_of_credit = stoi(num_string);
+            getline(split, num_string);
+            cur->data.max_student = stoi(num_string);
+            ifstream course_in;
+            importStudenttoCourse(cur->data, course_in);
+            cur->next = nullptr;
         }
+        fin.close();
     }
+}
+
+void exportCourseOfSemester(SchoolYear &sy, int sem, ofstream &fout) {
+    fout.open(sy.SchoolYearName + "_sem" + to_string(sem) + ".csv");
+    course_node *cur = sy.semester[sem - 1]->head;
+    while (cur) {
+        fout << cur->data.course_name << ",";
+        fout << cur->data.course_id << ",";
+        fout << cur->data.class_name << ",";
+        fout << cur->data.teacher_name << ",";
+        fout << cur->data.day_of_week << ",";
+        fout << cur->data.session << ",";
+        fout << cur->data.num_of_credit << ",";
+        fout << cur->data.max_student << endl;
+        cur = cur->next;
+    }
+    fout.close();
 }

@@ -12,6 +12,7 @@ void ExportListOfStudentInCourse(ofstream &fout, course_node *courses, string co
         cout << "Wrong course ID. Please try again." << endl;
         return;
     }
+    fout.open(course_id + "_sb.csv");
     student_node *student_cur = course_cur->data.head;
     if (!student_cur) {
         cout << "There's no student in this course." << endl;
@@ -22,6 +23,7 @@ void ExportListOfStudentInCourse(ofstream &fout, course_node *courses, string co
              << student_cur->data.last_name << endl;
         student_cur = student_cur->next;
     }
+    fout.close();
 }
 
 void ImportScoreboard(ifstream &fin, course_node *&courses, string course_id) {
@@ -37,11 +39,8 @@ void ImportScoreboard(ifstream &fin, course_node *&courses, string course_id) {
         cout << "Wrong course ID. Please try again." << endl;
         return;
     }
+    fin.open(course_id + "_sb.csv");
     student_node *student_cur = course_cur->data.head;
-    if (!student_cur) {
-        cout << "There's no student in this course." << endl;
-        return;
-    }
     string line;
     while (getline(fin, line)) {
         stringstream split(line);

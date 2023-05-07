@@ -18,14 +18,7 @@ void importStudenttoCourse(course &courses, ifstream &fin) {
         getline(split, cur->data.No, ',');
         getline(split, cur->data.ID, ',');
         getline(split, cur->data.first_name, ',');
-        getline(split, cur->data.last_name, ',');
-
-        string genderStr;
-        getline(split, genderStr, ',');
-        cur->data.isMale = (genderStr == "Male");
-
-        getline(split, cur->data.date_of_birth, ',');
-        getline(split, cur->data.social_id);
+        getline(split, cur->data.last_name);
 
         cur->next = nullptr;
     }
@@ -39,13 +32,7 @@ void exportStudentOfCourse(course course, ofstream &fout) {
         fout << cur->data.No << ",";
         fout << cur->data.ID << ",";
         fout << cur->data.first_name << ",";
-        fout << cur->data.last_name << ",";
-        if (cur->data.isMale)
-            fout << "Male,";
-        else
-            fout << "Female,";
-        fout << cur->data.date_of_birth << ",";
-        fout << cur->data.social_id << endl;
+        fout << cur->data.last_name << endl;
         cur = cur->next;
     }
     fout.close();

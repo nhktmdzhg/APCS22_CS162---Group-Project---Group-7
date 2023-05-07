@@ -34,6 +34,7 @@ int main() {
     }
     int choice = 0;
     semester *current_sem = nullptr;
+    SchoolYear current_sy;
     int cur_sem;
     if (current_user->data.isAdmin) {
         do {
@@ -63,21 +64,22 @@ int main() {
                 exportSchoolYear(sy, num_of_sy, schoolYear_out);
                 schoolYear_out.close();
             } else if (choice == 6) {
-                choose_current_sem(sy, num_of_sy, current_sem, cur_sem);
+                choose_current_sem(sy, num_of_sy, current_sem, cur_sem, current_sy);
             } else
                 cout << "Wrong choice, choose again." << endl;
         } while (choice != 3 && !current_sem);
     } else {
-        SchoolYear current_sy = sy[num_of_sy - 1];
+        current_sy = sy[num_of_sy - 1];
         for (int i = 2; i >= 0; i--) {
-            if (sy[num_of_sy - 1].semester[i] != nullptr) {
-                current_sem = sy[num_of_sy - 1].semester[i];
+            if (current_sy.semester[i]) {
+                current_sem = current_sy.semester[i];
                 cur_sem = i + 1;
                 break;
             }
         }
     }
-
+    ifstream courseToSemester;
+    importCourseToSemester(current_sy, cur_sem, courseToSemester);
 
     course_node *added;
 
@@ -130,6 +132,8 @@ int main() {
             } else if (choice == 6) {
                 if (current_user->data.isAdmin) {
                     addCourse(current_sem, added);
+                    ofstream course_out;
+                    exportCourseOfSemester(current_sy, cur_sem, course_out);
                 }
             } else if (choice == 7) {
                 if (current_user->data.isAdmin) {
@@ -175,6 +179,41 @@ int main() {
                     cin.ignore();
                     getline(cin, crs_id);
                     delete_Course(current_sem, crs_id);
+                    ofstream course_out;
+                    exportCourseOfSemester(current_sy, cur_sem, course_out);
+                }
+            } else if (choice == 13) {
+                if (current_user->data.isAdmin) {
+                    viewListOfClass(Classes);
+                }
+            } else if (choice == 14) {
+                if (current_user->data.isAdmin) {
+                    viewStudentsInClass(Classes);
+                }
+            } else if (choice == 15) {
+                if (current_user->data.isAdmin) {
+                    viewListOfCourse(current_sem);
+                }
+            } else if (choice == 16) {
+                if (current_user->data.isAdmin) {
+                    string crs_id;
+                    cout << "Input course ID: ";
+                    cin.ignore();
+                    getline(cin, crs_id);
+                    viewListOfStudentInCourse(current_sem->head, crs_id);
+                }
+            } else if (choice == 17) {
+                if (current_user->data.isAdmin) {
+                    ofstream sb_out;
+                    cout << "Input course you want to export list of student:";
+                    cin.ignore();
+                    string crs_id;
+                    getline(cin, crs_id);
+                    ExportListOfStudentInCourse(sb_out, current_sem->head, crs_id);
+                }
+            } else if (choice == 18) {
+                if (current_user->data.isAdmin) {
+
                 }
             } else
                 cout << "Wrong choice, choose again." << endl;

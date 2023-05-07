@@ -13,10 +13,14 @@ void viewStudentsInClass(classes_node *Classes) {
     cout << "Enter the class you would like to see the list: ";
     string cn;
     getline(cin, cn);
-    while (cur->data.class_name != cn) cur = cur->next;
+    while (cur && cur->data.class_name != cn) cur = cur->next;
+    if (!cur) {
+        cout << "Can't find class." << endl;
+        return;
+    }
     student_node *tmp = cur->data.head;
     while (tmp) {
-        cout << tmp->data.last_name << " " << tmp->data.first_name << endl;
+        cout << tmp->data.first_name << " " << tmp->data.last_name << endl;
         tmp = tmp->next;
     }
 }

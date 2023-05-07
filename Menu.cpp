@@ -14,6 +14,15 @@ void show_menu(User_node *current_user) {
         cout << "10. Add student to the course." << endl;
         cout << "11. Remove a student from the course." << endl;
         cout << "12. Delete a course." << endl;
+        cout << "13. View a list of classes." << endl;
+        cout << "14. View a list of student in class." << endl;
+        cout << "15. View a list of courses." << endl;
+        cout << "16. View a list of student in courses." << endl;
+        cout << "17. Export a list of student in a course to CSV file." << endl;
+        cout << "18. Import the scoreboard of a course." << endl;
+        cout << "19. View the scoreboard of a course." << endl;
+        cout << "20. Update a student's result." << endl;
+        cout << "21. View the scoreboard of a class." << endl;
     }
 }
 
