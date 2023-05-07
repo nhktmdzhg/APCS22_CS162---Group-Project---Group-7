@@ -213,9 +213,19 @@ int main() {
                 }
             } else if (choice == 18) {
                 if (current_user->data.isAdmin) {
+                    ifstream sb_in;
+                    cout << "Input course you want to import scoreboard: ";
+                    cin.ignore();
+                    string crs_id;
+                    getline(cin, crs_id);
+                    ImportScoreboard(sb_in, current_sem->head, crs_id);
+                }
+            } else if (choice == 19) {
+                if (current_user->data.isAdmin) {
 
                 }
-            } else
+            }
+            else
                 cout << "Wrong choice, choose again." << endl;
         } while (true);
     }
