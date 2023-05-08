@@ -138,6 +138,6 @@ void ViewTheScoreboardOfCourse(course_node *courses, string course_id); // cau 2
 
 void updateStudentResult(string student_id, string course_id, course_node *&courses); // cau 22
 
-void viewScoreboardOfClass(string class_name, course_node *courses); // cau 23
+void viewScoreboardOfClass(string class_name, course_node *courses, classes_node *classes); // cau 23
 
 void viewStudentScoreboard(string student_id, course_node *courses); // cau 24
