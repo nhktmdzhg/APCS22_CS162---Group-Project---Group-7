@@ -222,10 +222,13 @@ int main() {
                 }
             } else if (choice == 19) {
                 if (current_user->data.isAdmin) {
-
+                    string crs_id;
+                    cout << "Please enter the course id of the course you want to view the score board: ";
+                    cin.ignore();
+                    getline(cin, crs_id);
+                    ViewTheScoreboardOfCourse(current_sem->head, crs_id);
                 }
-            }
-            else
+            } else
                 cout << "Wrong choice, choose again." << endl;
         } while (true);
     }
