@@ -1,9 +1,9 @@
 #include "Menu.h"
 
 struct score {
-    float total, final, midterm, other;
+    float total, gpa, final, midterm, other;
 
-    score() : total(-1), final(-1), midterm(-1), other(-1) {}
+    score() : total(-1), gpa(-1), final(-1), midterm(-1), other(-1) {}
 };
 
 struct student {
@@ -23,6 +23,7 @@ struct student_node {
     student_node() : data(), next(nullptr) {}
 };
 
+
 struct course {
     int num_of_credit, max_student;
     string day_of_week;
@@ -32,7 +33,6 @@ struct course {
     string class_name;
     string teacher_name;
     student_node *head;
-
     course()
             : num_of_credit(), max_student(50), day_of_week(), session(), course_name(), course_id(), class_name(),
               teacher_name(),
