@@ -1,115 +1,65 @@
 #include "AllStruct.h"
 
-void finalMarksOfCourses(semester *sem, string class_name) {
-    course_node* cur = new course_node;
-    cur = sem->head;
-    while(cur) {
-        if(cur->data.class_name != class_name) cur = cur->next;
-        else if (cur->data.class_name == class_name) {
-            student_node* tmp = cur->data.head;
-            float finals = 0.0;
-            int n = 0;
-            while(tmp) {
-                finals += tmp->data.s.final;
-                n++;
-            }
-            finals = (float)(finals/n);
-            cout << "Mark of course " << cur->data.course_name << " is " << finals << "." << endl;
-            delete[] tmp;
-        }
+void viewScoreboardOfClass(string class_name, course_node *courses, classes_node *classes) {
+    classes_node *cur_class = classes;
+    while (cur_class != nullptr && cur_class->data.class_name != class_name)
+        cur_class = cur_class->next;
+    if (cur_class == nullptr) {
+        cout << "Can't find class." << endl;
+        return;
     }
-    delete[] cur;
-}
-
-void gpaOfCoursesInSemester(semester *sem, string class_name) {
-    course_node* cur = new course_node;
-    cur = sem->head;
-    float semgpa = 0.0;
-    int course = 0;
-    while(cur) {
-        if(cur->data.class_name != class_name) cur = cur->next;
-        else if(cur->data.class_name == class_name) {
-            float stu_gpa = 0.0;
-            int n;
-            student_node* tmp = cur->data.head;
-            while(tmp) {
-                stu_gpa += tmp->data.s.gpa;
-                n++;
-            }
-            stu_gpa = (float)(stu_gpa/n);
-            semgpa += stu_gpa;
-            course++;
-            delete[] tmp;
-        }
+    student_node *cur_student = cur_class->data.head;
+    if (cur_student == nullptr) {
+        cout << "There's no student in this class." << endl;
+        return;
     }
-    semgpa = (float)(semgpa/course);
-    cout << "Semester gpa of the class is " << semgpa << "."<< endl;
-    delete[] cur;
-}
-
-void gpaOfClass(course_node* courses, string classname) {
-    course_node* cur = new course_node;
-    cur = courses;
-    float class_gpa = 0.0;
-    int course = 0;
-    while(cur) {
-        if(cur->data.class_name != classname) cur = cur->next;
-        else if(cur->data.class_name == classname) {
-            float stu_gpa = 0.0;
-            int n;
-            student_node* tmp = cur->data.head;
-            while(tmp) {
-                stu_gpa += tmp->data.s.gpa;
-                n++;
+    cout << "This is scoreboard of class " << class_name << ":" << endl;
+    while (cur_student != nullptr) {
+        double overall_gpa = 0;
+        int num_of_all_credit = 0;
+        cout << cur_student->data.No << ". " << cur_student->data.first_name << " " << cur_student->data.last_name
+             << ":" << endl;
+        cout << "- ID: " << cur_student->data.ID << endl;
+        course_node *cur_course = courses;
+        while (cur_course != nullptr) {
+            student_node *std = cur_course->data.head;
+            while (std != nullptr && std->data.ID != cur_student->data.ID)
+                std = std->next;
+            if (std != nullptr) {
+                cout << "- Course: " << cur_course->data.course_name << " (" << cur_course->data.course_id << ")"
+                     << endl;
+                cout << "  Final mark: " << std->data.s.final << "; GPA: " << std->data.s.total << endl;
+                overall_gpa += std->data.s.total * cur_course->data.num_of_credit;
+                num_of_all_credit += cur_course->data.num_of_credit;
             }
-            stu_gpa = (float)(stu_gpa/n);
-            class_gpa += stu_gpa;
-            course++;
-            delete[] tmp;
+            cur_course = cur_course->next;
         }
+        cout << "Overall GPA: " << overall_gpa / num_of_all_credit;
+        cur_student = cur_student->next;
     }
-    class_gpa = (float)(class_gpa/course);
-    cout << "The class overall gpa is " << class_gpa << "." << endl;
-    delete[] cur;
 }
 
-void viewScoreboardOfClass(SchoolYear sy, course_node *courses, classes_node *classes) {
-    string classname;
-    int Sem;
-    cout << "Enter the class you would like to see the scoreboard: ";
-    cin >> classname;
-    cout << "Enter current semester: ";
-    cin >> Sem;
-    finalMarksOfCourses(sy.semester[Sem], classname);
-    gpaOfCoursesInSemester(sy.semester[Sem], classname);
-    gpaOfClass(courses, classname);
-
-}
-
-void viewStudentScoreboard(course_node *courses) {
-    string stu_id;
-    cout << "Enter student's ID to view scoreboard: ";
-    cin >> stu_id;
-    course_node* cur = new course_node;
-    cur = courses;
+void viewStudentScoreboard(string student_id, course_node *courses) {
+    course_node *cur = courses;
+    double overall_gpa = 0;
+    int num_of_all_credit = 0;
     cout << "This student's scoreboard: " << endl;
-    while(cur) {
-        student_node* stu = new student_node;
-        stu = cur->data.head;
-        while(stu) {
-            if(stu->data.ID != stu_id) stu = stu->next;
-            else if(stu->data.ID == stu_id) {
+    while (cur) {
+        student_node *stu = cur->data.head;
+        while (stu) {
+            if (stu->data.ID != student_id) stu = stu->next;
+            else {
                 cout << cur->data.course_name << ":" << endl;
                 cout << "Total: " << stu->data.s.total << endl;
-                cout << "GPA: " << stu->data.s.gpa << endl;
                 cout << "Final: " << stu->data.s.final << endl;
                 cout << "Midterm: " << stu->data.s.midterm << endl;
                 cout << "Others: " << stu->data.s.other << endl;
+                overall_gpa += stu->data.s.total * cur->data.num_of_credit;
+                num_of_all_credit += cur->data.num_of_credit;
                 break;
             }
         }
-        delete[] stu;
         cur = cur->next;
     }
-    delete[] cur;
+    cout << "Overall GPA: " << overall_gpa / num_of_all_credit;
 }

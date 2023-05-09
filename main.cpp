@@ -106,6 +106,8 @@ int main() {
                     addNewClass(Classes);
                     exportClass(Classes, class_out);
                     class_out.close();
+                } else {
+                    viewStudentCourse(current_user->data.username, current_sem->head);
                 }
             } else if (choice == 5) {
                 if (current_user->data.isAdmin) {
@@ -128,6 +130,8 @@ int main() {
                         else break;
                     }
                     cout << "1st year student is added from file." << endl;
+                } else {
+                    viewStudentScoreboard(current_user->data.username, current_sem->head);
                 }
             } else if (choice == 6) {
                 if (current_user->data.isAdmin) {
@@ -228,7 +232,27 @@ int main() {
                     getline(cin, crs_id);
                     ViewTheScoreboardOfCourse(current_sem->head, crs_id);
                 }
-            } else
+            } else if (choice == 20) {
+                if (current_user->data.isAdmin) {
+                    cout << "Input course ID: ";
+                    cin.ignore();
+                    string crs_id;
+                    getline(cin, crs_id);
+                    cout << "Input student ID: ";
+                    string std_id;
+                    getline(cin, std_id);
+                    updateStudentResult(std_id, crs_id, current_sem->head);
+                }
+            } else if (choice == 21) {
+                if (current_user->data.isAdmin) {
+                    string cls_name;
+                    cout << "Input class name: ";
+                    cin.ignore();
+                    getline(cin, cls_name);
+                    viewScoreboardOfClass(cls_name, current_sem->head, Classes);
+                }
+            }
+            else
                 cout << "Wrong choice, choose again." << endl;
         } while (true);
     }

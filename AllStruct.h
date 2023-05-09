@@ -1,9 +1,9 @@
 #include "Menu.h"
 
 struct score {
-    float total, gpa, final, midterm, other;
+    double total, final, midterm, other;
 
-    score() : total(-1), gpa(-1), final(-1), midterm(-1), other(-1) {}
+    score() : total(-1), final(-1), midterm(-1), other(-1) {}
 };
 
 struct student {
@@ -34,7 +34,7 @@ struct course {
     string teacher_name;
     student_node *head;
     course()
-            : num_of_credit(), max_student(50), day_of_week(), session(), course_name(), course_id(), class_name(),
+            : num_of_credit(4), max_student(50), day_of_week(), session(), course_name(), course_id(), class_name(),
               teacher_name(),
               head(nullptr) {}
 };
@@ -136,7 +136,7 @@ void ImportScoreboard(ifstream &fin, course_node *&courses, string course_id); /
 
 void ViewTheScoreboardOfCourse(course_node *courses, string course_id); // cau 21
 
-void updateStudentResult(string student_id, string course_id, course_node *&courses); // cau 22
+void updateStudentResult(string student_id, string course_id, course_node *courses); // cau 22
 
 void viewScoreboardOfClass(string class_name, course_node *courses, classes_node *classes); // cau 23
 

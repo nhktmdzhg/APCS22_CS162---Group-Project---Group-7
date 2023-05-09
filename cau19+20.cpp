@@ -70,13 +70,13 @@ void ImportScoreboard(ifstream &fin, course_node *&courses, string course_id) {
             continue;
         }
         getline(split, std_data, ',');
-        student_cur->data.s.total = stof(std_data);
+        student_cur->data.s.total = stod(std_data);
         getline(split, std_data, ',');
-        student_cur->data.s.final = stof(std_data);
+        student_cur->data.s.final = stod(std_data);
         getline(split, std_data, ',');
-        student_cur->data.s.midterm = stof(std_data);
+        student_cur->data.s.midterm = stod(std_data);
         getline(split, std_data);
-        student_cur->data.s.other = stof(std_data);
+        student_cur->data.s.other = stod(std_data);
         student_cur = student_cur->next;
     }
     if (count != 0)

@@ -23,6 +23,9 @@ void show_menu(User_node *current_user) {
         cout << "19. View the scoreboard of a course." << endl;
         cout << "20. Update a student's result." << endl;
         cout << "21. View the scoreboard of a class." << endl;
+    } else {
+        cout << "4. View list of my course." << endl;
+        cout << "5. View my scoreboard." << endl;
     }
 }
 
