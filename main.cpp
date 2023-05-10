@@ -1,4 +1,4 @@
-#include "AllStruct.h"
+#include "Class.h"
 
 int main() {
     cout << "Welcome to the course management system." << endl;
@@ -45,16 +45,16 @@ int main() {
                 view_in4(current_user);
             } else if (choice == 2) {
                 ofstream login_out;
-                login_out.open("Login.txt", ofstream::out | ofstream::trunc);
                 change_password(current_user);
+                login_out.open("Login.txt", ofstream::out | ofstream::trunc);
                 export_login_data(users, login_out);
                 login_out.close();
             } else if (choice == 3)
                 break;
             else if (choice == 4) {
                 ofstream schoolYear_out;
-                schoolYear_out.open("School year.txt", ofstream::out | ofstream::trunc);
                 createNewSchoolYear(sy, num_of_sy);
+                schoolYear_out.open("School year.txt", ofstream::out | ofstream::trunc);
                 exportSchoolYear(sy, num_of_sy, schoolYear_out);
                 schoolYear_out.close();
             } else if (choice == 5) {
@@ -69,21 +69,27 @@ int main() {
                 cout << "Wrong choice, choose again." << endl;
         } while (choice != 3 && !current_sem);
     } else {
-        current_sy = sy[num_of_sy - 1];
-        for (int i = 2; i >= 0; i--) {
-            if (current_sy.semester[i]) {
-                current_sem = current_sy.semester[i];
-                cur_sem = i + 1;
-                break;
+        bool haveSem = false;
+        for (int m = num_of_sy - 1; m >= 0; m--) {
+            for (int i = 2; i >= 0; i--) {
+                if (sy[m].semester[i]) {
+                    current_sem = current_sy.semester[i];
+                    current_sy = sy[m];
+                    cur_sem = i + 1;
+                    haveSem = true;
+                    break;
+                }
             }
+            if (haveSem)
+                break;
         }
     }
     ifstream courseToSemester;
     importCourseToSemester(current_sy, cur_sem, courseToSemester);
 
-    course_node *added;
-
     if (choice != 3) {
+        course_node *added;
+
         do {
             show_menu(current_user);
             cout << "Please input your choice: ";
@@ -138,17 +144,20 @@ int main() {
                     addCourse(current_sem, added);
                     ofstream course_out;
                     exportCourseOfSemester(current_sy, cur_sem, course_out);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 7) {
                 if (current_user->data.isAdmin) {
                     ifstream course_in;
-                    importStudenttoCourse(added->data, course_in);
+                    importStudenttoCourse(added->data, course_in, current_sy.SchoolYearName);
                     course_in.close();
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 8) {
                 if (current_user->data.isAdmin) {
                     viewListofCourse(current_sem->head);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 9) {
                 if (current_user->data.isAdmin) {
                     string course_id;
@@ -156,7 +165,8 @@ int main() {
                     cin.ignore();
                     getline(cin, course_id);
                     updateCourseIn4(current_sem->head, course_id);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 10) {
                 if (current_user->data.isAdmin) {
                     student_node *newStudent = nullptr;
@@ -164,8 +174,9 @@ int main() {
                     string course_id;
                     cin.ignore();
                     getline(cin, course_id);
-                    addStudentToCourse(current_sem->head, course_id, newStudent);
-                }
+                    addStudentToCourse(current_sem->head, course_id, newStudent, current_sy.SchoolYearName);
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 11) {
                 if (current_user->data.isAdmin) {
                     cout << "Input student's ID you want to remove from course:";
@@ -174,8 +185,9 @@ int main() {
                     getline(cin, std_id);
                     cout << "Input course ID: ";
                     getline(cin, crs_id);
-                    removeStudentFromCourse(current_sem->head, crs_id, std_id);
-                }
+                    removeStudentFromCourse(current_sem->head, crs_id, std_id, current_sy.SchoolYearName);
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 12) {
                 if (current_user->data.isAdmin) {
                     cout << "Input course id:";
@@ -185,19 +197,23 @@ int main() {
                     delete_Course(current_sem, crs_id);
                     ofstream course_out;
                     exportCourseOfSemester(current_sy, cur_sem, course_out);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 13) {
                 if (current_user->data.isAdmin) {
                     viewListOfClass(Classes);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 14) {
                 if (current_user->data.isAdmin) {
                     viewStudentsInClass(Classes);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 15) {
                 if (current_user->data.isAdmin) {
                     viewListOfCourse(current_sem);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 16) {
                 if (current_user->data.isAdmin) {
                     string crs_id;
@@ -205,7 +221,8 @@ int main() {
                     cin.ignore();
                     getline(cin, crs_id);
                     viewListOfStudentInCourse(current_sem->head, crs_id);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 17) {
                 if (current_user->data.isAdmin) {
                     ofstream sb_out;
@@ -213,8 +230,9 @@ int main() {
                     cin.ignore();
                     string crs_id;
                     getline(cin, crs_id);
-                    ExportListOfStudentInCourse(sb_out, current_sem->head, crs_id);
-                }
+                    ExportListOfStudentInCourse(sb_out, current_sem->head, crs_id, current_sy.SchoolYearName);
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 18) {
                 if (current_user->data.isAdmin) {
                     ifstream sb_in;
@@ -222,8 +240,9 @@ int main() {
                     cin.ignore();
                     string crs_id;
                     getline(cin, crs_id);
-                    ImportScoreboard(sb_in, current_sem->head, crs_id);
-                }
+                    ImportScoreboard(sb_in, current_sem->head, crs_id, current_sy.SchoolYearName);
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 19) {
                 if (current_user->data.isAdmin) {
                     string crs_id;
@@ -231,7 +250,8 @@ int main() {
                     cin.ignore();
                     getline(cin, crs_id);
                     ViewTheScoreboardOfCourse(current_sem->head, crs_id);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 20) {
                 if (current_user->data.isAdmin) {
                     cout << "Input course ID: ";
@@ -242,7 +262,8 @@ int main() {
                     string std_id;
                     getline(cin, std_id);
                     updateStudentResult(std_id, crs_id, current_sem->head);
-                }
+                } else
+                    cout << "Wrong choice, choose again." << endl;
             } else if (choice == 21) {
                 if (current_user->data.isAdmin) {
                     string cls_name;
@@ -250,9 +271,9 @@ int main() {
                     cin.ignore();
                     getline(cin, cls_name);
                     viewScoreboardOfClass(cls_name, current_sem->head, Classes);
-                }
-            }
-            else
+                } else
+                    cout << "Wrong choice, choose again." << endl;
+            } else
                 cout << "Wrong choice, choose again." << endl;
         } while (true);
     }
