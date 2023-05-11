@@ -48,6 +48,6 @@ void ExportScoreboard(ofstream &fout, course_node *courses, string course_id, st
 
 void ViewTheScoreboardOfCourse(course_node *courses, string course_id);
 
-void updateStudentResult(string student_id, string course_id, course_node *courses);
+void updateStudentResult(string student_id, string course_id, course_node* courses);
 
 void viewStudentScoreboard(string student_id, course_node *courses);

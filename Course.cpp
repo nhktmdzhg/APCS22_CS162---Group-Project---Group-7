@@ -452,3 +452,38 @@ void viewStudentScoreboard(string student_id, course_node *courses) {
     }
     cout << "Overall GPA: " << overall_gpa / num_of_all_credit;
 }
+
+#include"Course.h"
+
+void updateStudentResult(string student_id, string course_id, course_node* courses){
+    cout<<"Please enter the course ID: ";
+    getline(cin,course_id);
+    cout<<"Please enter the student ID: ";
+    getline(cin,student_id);
+    while(courses->next && courses->data.course_id!=course_id) courses=courses->next;
+    while(courses->data.head->next && courses->data.head->data.ID!=student_id) courses->data.head=courses->data.head->next;
+    int score;char choice;
+    do{
+        cout<<"Please enter the score you want to change: ";
+        string score_name;
+        getline(cin,score_name);
+        if(score_name=="midterm"){
+            cin>>score;
+            courses->data.head->data.s.midterm=score;
+        }
+        else if(score_name=="final"){
+            cin>>score;
+            courses->data.head->data.s.final=score;
+        }
+        else if(score_name=="total"){
+            cin>>score;
+            courses->data.head->data.s.total=score;
+        }
+        else{
+            cin>>score;
+            courses->data.head->data.s.other=score;
+        }
+        cout<<"Do you want to update more? (Y/N)";
+        cin>>choice;
+    }while(toupper(choice)=='Y');
+}
