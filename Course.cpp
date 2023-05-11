@@ -453,8 +453,6 @@ void viewStudentScoreboard(string student_id, course_node *courses) {
     cout << "Overall GPA: " << overall_gpa / num_of_all_credit;
 }
 
-#include"Course.h"
-
 void updateStudentResult(string student_id, string course_id, course_node* courses){
     cout<<"Please enter the course ID: ";
     getline(cin,course_id);
