@@ -139,7 +139,7 @@ void importCourseToSemester(SchoolYear &sy, int sem, ifstream &fin) {
             ifstream course_in;
             importStudenttoCourse(cur->data, course_in, sy.SchoolYearName);
             ifstream sb_in;
-            ImportScoreboard(sb_in, sy.semester[sem - 1]->head, cur->data.course_name, sy.SchoolYearName);
+            ImportScoreboard(sb_in, sy.semester[sem - 1]->head, cur->data.course_id, sy.SchoolYearName);
             cur->next = nullptr;
         }
         fin.close();

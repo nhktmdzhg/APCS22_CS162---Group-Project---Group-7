@@ -17,10 +17,17 @@ void importClass(classes_node *&head, ifstream &fin) {
 }
 
 void addNewClass(classes_node *&head) {
-    classes_node *cur = head;
-    while (cur->next) cur = cur->next;
-    cur->next = new classes_node;
-    cur = cur->next;
+    classes_node *cur;
+    if (!head) {
+        head = new classes_node;
+        cur = head;
+    } else {
+        cur = head;
+        while (cur->next)
+            cur = cur->next;
+        cur->next = new classes_node;
+        cur = cur->next;
+    }
     cout << "Input class name: ";
     cin.ignore();
     getline(cin, cur->data.class_name);
@@ -44,44 +51,46 @@ void deleteClass(classes_node *&head) {
 
 void addStudentToClass(classes &c, ifstream &fin) {
     fin.open(c.class_name + ".csv");
-    student_node *cur;
-    string line;
-    while (getline(fin, line)) {
-        //tạo node mới
-        if (!c.head) {
-            c.head = new student_node;
-            cur = c.head;
-        } else {
-            cur->next = new student_node;
-            cur = cur->next;
+    if (fin.good()) {
+        student_node *cur;
+        string line;
+        while (getline(fin, line)) {
+            //tạo node mới
+            if (!c.head) {
+                c.head = new student_node;
+                cur = c.head;
+            } else {
+                cur->next = new student_node;
+                cur = cur->next;
+            }
+            stringstream split(line);
+            string no, ID, first_name, last_name, gender, dob, social_id;
+            //lấy data
+            getline(split, no, ',');
+            cur->data.No = no;
+
+            getline(split, ID, ',');
+            cur->data.ID = ID;
+
+            getline(split, first_name, ',');
+            cur->data.first_name = first_name;
+
+            getline(split, last_name, ',');
+            cur->data.last_name = last_name;
+
+            getline(split, gender, ',');
+            cur->data.isMale = (gender == "Male");
+
+            getline(split, dob, ',');
+            cur->data.date_of_birth = dob;
+
+            getline(split, social_id);
+            cur->data.social_id = social_id;
+
+            cur->next = nullptr;
         }
-        stringstream split(line);
-        string no, ID, first_name, last_name, gender, dob, social_id;
-        //lấy data
-        getline(split, no, ',');
-        cur->data.No = no;
-
-        getline(split, ID, ',');
-        cur->data.ID = ID;
-
-        getline(split, first_name, ',');
-        cur->data.first_name = first_name;
-
-        getline(split, last_name, ',');
-        cur->data.last_name = last_name;
-
-        getline(split, gender, ',');
-        cur->data.isMale = (gender == "Male");
-
-        getline(split, dob, ',');
-        cur->data.date_of_birth = dob;
-
-        getline(split, social_id);
-        cur->data.social_id = social_id;
-
-        cur->next = nullptr;
+        fin.close();
     }
-    fin.close();
 }
 
 void viewListOfClass(classes_node *Classes) {
@@ -96,6 +105,7 @@ void viewStudentsInClass(classes_node *Classes) {
     classes_node *cur = Classes;
     cout << "Enter the class you would like to see the list: ";
     string cn;
+    cin.ignore();
     getline(cin, cn);
     while (cur && cur->data.class_name != cn) cur = cur->next;
     if (!cur) {

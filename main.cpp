@@ -18,20 +18,6 @@ int main() {
     schoolYear_in.open("School year.txt");
     importSchoolYear(sy, schoolYear_in, num_of_sy);
     schoolYear_in.close();
-    //Import class
-    classes_node *Classes = nullptr;
-    ifstream class_in;
-    class_in.open("Class.txt");
-    importClass(Classes, class_in);
-    class_in.close();
-    //Import student to class
-    classes_node *class_cur = Classes;
-    while (true) {
-        ifstream addStudent;
-        addStudentToClass(class_cur->data, addStudent);
-        if (class_cur->next) class_cur = class_cur->next;
-        else break;
-    }
     int choice = 0;
     semester *current_sem = nullptr;
     SchoolYear current_sy;
@@ -73,7 +59,7 @@ int main() {
         for (int m = num_of_sy - 1; m >= 0; m--) {
             for (int i = 2; i >= 0; i--) {
                 if (sy[m].semester[i]) {
-                    current_sem = current_sy.semester[i];
+                    current_sem = sy[m].semester[i];
                     current_sy = sy[m];
                     cur_sem = i + 1;
                     haveSem = true;
@@ -83,6 +69,20 @@ int main() {
             if (haveSem)
                 break;
         }
+    }
+    //Import class
+    classes_node *Classes = nullptr;
+    ifstream class_in;
+    class_in.open(current_sy.SchoolYearName + "_Class.txt");
+    importClass(Classes, class_in);
+    class_in.close();
+    //Import student to class
+    classes_node *class_cur = Classes;
+    while (class_cur) {
+        ifstream addStudent;
+        addStudentToClass(class_cur->data, addStudent);
+        if (class_cur->next) class_cur = class_cur->next;
+        else break;
     }
     ifstream courseToSemester;
     importCourseToSemester(current_sy, cur_sem, courseToSemester);
@@ -108,8 +108,8 @@ int main() {
             else if (choice == 4) {
                 if (current_user->data.isAdmin) {
                     ofstream class_out;
-                    class_out.open("Class.txt", ofstream::out | ofstream::trunc);
                     addNewClass(Classes);
+                    class_out.open(current_sy.SchoolYearName + "_Class.txt", ofstream::out | ofstream::trunc);
                     exportClass(Classes, class_out);
                     class_out.close();
                 } else {
@@ -118,7 +118,7 @@ int main() {
             } else if (choice == 5) {
                 if (current_user->data.isAdmin) {
                     class_cur = class_cur->next;
-                    while (true) {
+                    while (class_cur) {
                         ifstream addStudent;
                         addStudentToClass(class_cur->data, addStudent);//add student to class
                         //create account for student
@@ -150,7 +150,7 @@ int main() {
                 if (current_user->data.isAdmin) {
                     ifstream course_in;
                     importStudenttoCourse(added->data, course_in, current_sy.SchoolYearName);
-                    course_in.close();
+                    cout << "Import student to course " << added->data.course_name << "successfully." << endl;
                 } else
                     cout << "Wrong choice, choose again." << endl;
             } else if (choice == 8) {
@@ -262,6 +262,8 @@ int main() {
                     string std_id;
                     getline(cin, std_id);
                     updateStudentResult(std_id, crs_id, current_sem->head);
+                    ofstream sb_out;
+                    ExportScoreboard(sb_out, current_sem->head, crs_id, current_sy.SchoolYearName);
                 } else
                     cout << "Wrong choice, choose again." << endl;
             } else if (choice == 21) {

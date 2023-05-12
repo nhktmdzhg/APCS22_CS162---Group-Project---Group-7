@@ -36,7 +36,18 @@ void addCourse(semester *&current_sem, course_node *&added) {
 }
 
 void delete_Course(semester *sem, string course_id) {
-    for (course_node *cur_course = sem->head; cur_course->next != nullptr; cur_course = cur_course->next) {
+    course_node *cur_course = sem->head;
+    if (!cur_course) {
+        cout << "There's no course in this semester to delete." << endl;
+        return;
+    }
+    if (cur_course->data.course_id == course_id) {
+        course_node *tmp = cur_course;
+        sem->head = sem->head->next;
+        delete tmp;
+        return;
+    }
+    for (; cur_course->next != nullptr; cur_course = cur_course->next) {
         if (cur_course->next->data.course_id == course_id) {
             course_node *tmp = cur_course->next;
             cur_course->next = tmp->next;

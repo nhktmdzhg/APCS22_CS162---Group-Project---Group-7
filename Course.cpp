@@ -63,13 +63,13 @@ void viewListofCourse(course_node *head) {
                 cout << "(7:30)" << endl;
                 break;
             case 2:
-                cout << "9:30" << endl;
+                cout << "(9:30)" << endl;
                 break;
             case 3:
-                cout << "13:30" << endl;
+                cout << "(13:30)" << endl;
                 break;
             case 4:
-                cout << "15:30" << endl;
+                cout << "(15:30)" << endl;
                 break;
             default:
                 cout << " ";
@@ -128,28 +128,14 @@ void addStudentToCourse(course_node *courses, string course_id, student_node *ne
             cout << "Input last name: ";
             getline(cin, new_student->data.last_name);
 
-            cout << "Input date of birth (dd/mm/yyyy): ";
-            string dob;
-            getline(cin, dob);
-            new_student->data.date_of_birth = dob.substr(0, 2) + dob.substr(3, 2) + dob.substr(6, 4);
-
-            cout << "Input gender (Male/Female): ";
-            string genderStr;
-            getline(cin, genderStr);
-            new_student->data.isMale = (genderStr == "Male");
-
-            cout << "Input social ID: ";
-            getline(cin, new_student->data.social_id);
-
             new_student->next = nullptr;
 
             if (cur_student == nullptr) {
                 new_student->data.No = "1";
                 cur_course->data.head = new_student;
             } else {
-                while (cur_student->next != nullptr) {
+                while (cur_student->next != nullptr)
                     cur_student = cur_student->next;
-                }
                 new_student->data.No = to_string(stoi(cur_student->data.No) + 1);
                 cur_student->next = new_student;
             }
@@ -167,9 +153,9 @@ void addStudentToCourse(course_node *courses, string course_id, student_node *ne
 void removeStudentFromCourse(course_node *courses, string course_id, string student_id, string sy_name) {
     // Find the course
     course_node *course_ptr = courses;
-    while (course_ptr != nullptr && course_ptr->data.course_id != course_id) {
+    while (course_ptr != nullptr && course_ptr->data.course_id != course_id)
         course_ptr = course_ptr->next;
-    }
+
     if (course_ptr == nullptr) {
         cout << "Error: Cannot find the course with id " << course_id << endl;
         return;
@@ -211,8 +197,6 @@ void removeStudentFromCourse(course_node *courses, string course_id, string stud
 }
 
 void viewStudentCourse(string student_id, course_node *courses) {
-    cout << "Please enter the id to view that student courses: ";
-    getline(cin, student_id);
     while (courses) {
         student_node *cur = courses->data.head;
         while (cur) {
@@ -251,6 +235,7 @@ void viewListOfStudentInCourse(course_node *courses, string course_id) {
                 cout << "Social ID: " << students->data.social_id << endl;
                 students = students->next;
                 cout << endl;
+                ++count;
             }
             break;
         }
@@ -402,32 +387,6 @@ void ViewTheScoreboardOfCourse(course_node *courses, string course_id) {
     }
 }
 
-void updateStudentResult(string student_id, string course_id, course_node *courses) {
-    course_node *cur_course = courses;
-    while (cur_course != nullptr && cur_course->data.course_id != course_id)
-        cur_course = cur_course->next;
-    if (cur_course == nullptr) {
-        cout << "Course not found." << endl;
-        return;
-    }
-    student_node *cur_student = cur_course->data.head;
-    while (cur_student != nullptr && cur_student->data.ID != student_id)
-        cur_student = cur_student->next;
-    if (cur_student == nullptr) {
-        cout << "Student not found." << endl;
-        return;
-    }
-    cout << "Update total mark: ";
-    cin.ignore();
-    cin >> cur_student->data.s.total;
-    cout << "Update final mark: ";
-    cin >> cur_student->data.s.final;
-    cout << "Update midterm mark: ";
-    cin >> cur_student->data.s.midterm;
-    cout << "Update other mark: ";
-    cin >> cur_student->data.s.other;
-}
-
 void viewStudentScoreboard(string student_id, course_node *courses) {
     course_node *cur = courses;
     double overall_gpa = 0;
@@ -450,38 +409,46 @@ void viewStudentScoreboard(string student_id, course_node *courses) {
         }
         cur = cur->next;
     }
-    cout << "Overall GPA: " << overall_gpa / num_of_all_credit;
+    cout << "Overall GPA: " << overall_gpa / num_of_all_credit << endl;
 }
 
-void updateStudentResult(string student_id, string course_id, course_node* courses){
-    cout<<"Please enter the course ID: ";
-    getline(cin,course_id);
-    cout<<"Please enter the student ID: ";
-    getline(cin,student_id);
-    while(courses->next && courses->data.course_id!=course_id) courses=courses->next;
-    while(courses->data.head->next && courses->data.head->data.ID!=student_id) courses->data.head=courses->data.head->next;
-    int score;char choice;
-    do{
-        cout<<"Please enter the score you want to change: ";
+void updateStudentResult(string student_id, string course_id, course_node *courses) {
+    course_node *cur_course = courses;
+    while (cur_course != nullptr && cur_course->data.course_id != course_id)
+        cur_course = cur_course->next;
+    if (cur_course == nullptr) {
+        cout << "Course not found." << endl;
+        return;
+    }
+    student_node *cur_student = cur_course->data.head;
+    while (cur_student != nullptr && cur_student->data.ID != student_id)
+        cur_student = cur_student->next;
+    if (cur_student == nullptr) {
+        cout << "Student not found." << endl;
+        return;
+    }
+    int score;
+    char choice;
+    do {
+        cout << "Please enter the score you want to change: ";
         string score_name;
-        getline(cin,score_name);
-        if(score_name=="midterm"){
-            cin>>score;
-            courses->data.head->data.s.midterm=score;
-        }
-        else if(score_name=="final"){
-            cin>>score;
-            courses->data.head->data.s.final=score;
-        }
-        else if(score_name=="total"){
-            cin>>score;
-            courses->data.head->data.s.total=score;
-        }
-        else{
-            cin>>score;
-            courses->data.head->data.s.other=score;
-        }
-        cout<<"Do you want to update more? (Y/N)";
-        cin>>choice;
-    }while(toupper(choice)=='Y');
+        cin.ignore();
+        getline(cin, score_name);
+        if (score_name == "midterm") {
+            cin >> score;
+            courses->data.head->data.s.midterm = score;
+        } else if (score_name == "final") {
+            cin >> score;
+            courses->data.head->data.s.final = score;
+        } else if (score_name == "total") {
+            cin >> score;
+            courses->data.head->data.s.total = score;
+        } else if (score_name == "other") {
+            cin >> score;
+            courses->data.head->data.s.other = score;
+        } else
+            cout << "Wrong score name, please try again." << endl;
+        cout << "Do you want to update more? (Y/N)";
+        cin >> choice;
+    } while (toupper(choice) == 'Y');
 }
