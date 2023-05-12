@@ -154,7 +154,7 @@ void viewScoreboardOfClass(string class_name, course_node *courses, classes_node
             }
             cur_course = cur_course->next;
         }
-        cout << "Overall GPA: " << overall_gpa / num_of_all_credit;
+        cout << "Overall GPA: " << overall_gpa / num_of_all_credit << endl;
         cur_student = cur_student->next;
     }
 }

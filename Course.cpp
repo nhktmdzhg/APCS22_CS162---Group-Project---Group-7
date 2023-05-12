@@ -425,28 +425,12 @@ void updateStudentResult(string student_id, string course_id, course_node *cours
         cout << "Student not found." << endl;
         return;
     }
-    int score;
-    char choice;
-    do {
-        cout << "Please enter the score you want to change: ";
-        string score_name;
-        cin.ignore();
-        getline(cin, score_name);
-        if (score_name == "midterm") {
-            cin >> score;
-            courses->data.head->data.s.midterm = score;
-        } else if (score_name == "final") {
-            cin >> score;
-            courses->data.head->data.s.final = score;
-        } else if (score_name == "total") {
-            cin >> score;
-            courses->data.head->data.s.total = score;
-        } else if (score_name == "other") {
-            cin >> score;
-            courses->data.head->data.s.other = score;
-        } else
-            cout << "Wrong score name, please try again." << endl;
-        cout << "Do you want to update more? (Y/N)";
-        cin >> choice;
-    } while (toupper(choice) == 'Y');
+    cout << "Update total mark: ";
+    cin >> cur_student->data.s.total;
+    cout << "Update final mark: ";
+    cin >> cur_student->data.s.final;
+    cout << "Update midterm mark: ";
+    cin >> cur_student->data.s.midterm;
+    cout << "Update other mark: ";
+    cin >> cur_student->data.s.other;
 }

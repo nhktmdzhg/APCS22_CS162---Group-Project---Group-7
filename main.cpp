@@ -166,6 +166,8 @@ int main() {
                     cin.ignore();
                     getline(cin, course_id);
                     updateCourseIn4(current_sem->head, course_id);
+                    ofstream course_out;
+                    exportCourseOfSemester(current_sy, cur_sem, course_out);
                 } else
                     cout << "Wrong choice, choose again." << endl;
             } else if (choice == 10) {
