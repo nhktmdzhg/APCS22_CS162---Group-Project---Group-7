@@ -44,7 +44,7 @@ int main() {
                 exportSchoolYear(sy, num_of_sy, schoolYear_out);
                 schoolYear_out.close();
             } else if (choice == 5) {
-                createSemester(sy, current_sem, num_of_sy);
+                createSemester(sy, num_of_sy);
                 ofstream schoolYear_out;
                 schoolYear_out.open("School year.txt", ofstream::out | ofstream::trunc);
                 exportSchoolYear(sy, num_of_sy, schoolYear_out);
@@ -81,14 +81,15 @@ int main() {
     while (class_cur) {
         ifstream addStudent;
         addStudentToClass(class_cur->data, addStudent);
-        if (class_cur->next) class_cur = class_cur->next;
-        else break;
+        if (class_cur->next)
+            class_cur = class_cur->next;
+        else
+            break;
     }
     ifstream courseToSemester;
     importCourseToSemester(current_sy, cur_sem, courseToSemester);
-
     if (choice != 3) {
-        course_node *added;
+        course_node *added = nullptr;
 
         do {
             show_menu(current_user);
@@ -149,8 +150,8 @@ int main() {
             } else if (choice == 7) {
                 if (current_user->data.isAdmin) {
                     ifstream course_in;
-                    importStudenttoCourse(added->data, course_in, current_sy.SchoolYearName);
-                    cout << "Import student to course " << added->data.course_name << "successfully." << endl;
+                    importStudenttoCourse(added, course_in, current_sy.SchoolYearName);
+                    cout << "Import student to course " << added->data.course_name << " successfully." << endl;
                 } else
                     cout << "Wrong choice, choose again." << endl;
             } else if (choice == 8) {
@@ -169,7 +170,7 @@ int main() {
                     cout << "Wrong choice, choose again." << endl;
             } else if (choice == 10) {
                 if (current_user->data.isAdmin) {
-                    student_node *newStudent = nullptr;
+                    auto *newStudent = new student_node;
                     cout << "Input course ID: ";
                     string course_id;
                     cin.ignore();
@@ -179,8 +180,8 @@ int main() {
                     cout << "Wrong choice, choose again." << endl;
             } else if (choice == 11) {
                 if (current_user->data.isAdmin) {
-                    cout << "Input student's ID you want to remove from course:";
                     string std_id, crs_id;
+                    cout << "Input student's ID you want to remove from course:";
                     cin.ignore();
                     getline(cin, std_id);
                     cout << "Input course ID: ";

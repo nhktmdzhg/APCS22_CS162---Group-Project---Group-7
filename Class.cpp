@@ -35,9 +35,10 @@ void addNewClass(classes_node *&head) {
 }
 
 void exportClass(classes_node *head, ofstream &fout) {
-    while (head) {
-        fout << head->data.class_name << endl;
-        head = head->next;
+    classes_node *cur = head;
+    while (cur) {
+        fout << cur->data.class_name << endl;
+        cur = cur->next;
     }
 }
 

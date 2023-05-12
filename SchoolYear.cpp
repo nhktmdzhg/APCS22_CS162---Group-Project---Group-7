@@ -6,7 +6,7 @@ void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&curren
     cin.ignore();
     getline(cin, sy_in);
     for (int i = 0; i < numOfSchoolYear; i++) {
-        if (sy_in == sy[i].SchoolYearName) {
+        if (sy[i].SchoolYearName == sy_in) {
             cout << "Input semester: ";
             int sem;
             cin >> sem;
@@ -19,7 +19,7 @@ void choose_current_sem(SchoolYear *&sy, int &numOfSchoolYear, semester *&curren
                     cur_sy = sy[i];
                 }
             } else
-                cout << "Invalid semester" << endl;
+                cout << "Invalid semester." << endl;
             return;
         }
     }
@@ -72,7 +72,7 @@ void deleteSemester(SchoolYear &sy) {
         delete sy.semester[i];
 }
 
-void createSemester(SchoolYear *&sy, semester *&current_sem, int numOfSchoolYear) {
+void createSemester(SchoolYear *&sy, int numOfSchoolYear) {
     cout << "Input semester you want to create: ";
     int z;
     cin >> z;
@@ -99,7 +99,6 @@ void createSemester(SchoolYear *&sy, semester *&current_sem, int numOfSchoolYear
                     sy[i].semester[z - 1]->ed_day = ed_d;
                     sy[i].semester[z - 1]->ed_month = ed_m;
                     sy[i].semester[z - 1]->ed_year = ed_y;
-                    current_sem = sy[i].semester[z - 1];
                     cout << "Semester " << z << " is created." << endl;
                 }
             } else
@@ -137,7 +136,7 @@ void importCourseToSemester(SchoolYear &sy, int sem, ifstream &fin) {
             getline(split, num_string);
             cur->data.max_student = stoi(num_string);
             ifstream course_in;
-            importStudenttoCourse(cur->data, course_in, sy.SchoolYearName);
+            importStudenttoCourse(cur, course_in, sy.SchoolYearName);
             ifstream sb_in;
             ImportScoreboard(sb_in, sy.semester[sem - 1]->head, cur->data.course_id, sy.SchoolYearName);
             cur->next = nullptr;

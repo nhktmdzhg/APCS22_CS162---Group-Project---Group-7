@@ -22,7 +22,7 @@ struct course_node {
     course_node() : data(), next(nullptr) {}
 };
 
-void importStudenttoCourse(course &courses, ifstream &fin, string sy_name);
+void importStudenttoCourse(course_node *&courses, ifstream &fin, string sy_name);
 
 void exportStudentOfCourse(course course, ofstream &fout, string sy_name);
 

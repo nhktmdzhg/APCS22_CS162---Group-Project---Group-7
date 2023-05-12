@@ -15,7 +15,7 @@ void exportSchoolYear(SchoolYear *sy, int numOfSchoolYear, ofstream &fout);
 
 void deleteSemester(SchoolYear &sy);
 
-void createSemester(SchoolYear *&sy, semester *&current_sem, int numOfSchoolYear);
+void createSemester(SchoolYear *&sy, int numOfSchoolYear);
 
 void importCourseToSemester(SchoolYear &sy, int sem, ifstream &fin);
 

@@ -11,7 +11,6 @@ void addCourse(semester *&current_sem, course_node *&added) {
         cur->next = new course_node;
         cur = cur->next;
     }
-    added = cur;
     cout << "Enter course information:" << endl;
     cout << "Course name: ";
     cin.ignore();
@@ -33,26 +32,30 @@ void addCourse(semester *&current_sem, course_node *&added) {
     getline(cin, cur->data.day_of_week);
     cout << "Course has been added." << endl;
     cur->next = nullptr;
+    added = cur;
 }
 
 void delete_Course(semester *sem, string course_id) {
-    course_node *cur_course = sem->head;
-    if (!cur_course) {
+    if (!sem->head) {
         cout << "There's no course in this semester to delete." << endl;
         return;
     }
-    if (cur_course->data.course_id == course_id) {
-        course_node *tmp = cur_course;
+    if (sem->head->data.course_id == course_id) {
+        course_node *tmp = sem->head;
         sem->head = sem->head->next;
+        deleteStudent(tmp->data.head);
         delete tmp;
+        cout << "Delete course " << course_id << " successfully." << endl;
         return;
     }
+    course_node *cur_course = sem->head;
     for (; cur_course->next != nullptr; cur_course = cur_course->next) {
         if (cur_course->next->data.course_id == course_id) {
             course_node *tmp = cur_course->next;
             cur_course->next = tmp->next;
             deleteStudent(tmp->data.head);
             delete tmp;
+            cout << "Delete course " << course_id << " successfully." << endl;
             return;
         }
     }

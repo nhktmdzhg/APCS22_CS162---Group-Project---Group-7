@@ -1,15 +1,15 @@
 #include "Course.h"
 
-void importStudenttoCourse(course &courses, ifstream &fin, string sy_name) {
-    fin.open(courses.course_id + "_" + sy_name + ".csv");
+void importStudenttoCourse(course_node *&courses, ifstream &fin, string sy_name) {
+    fin.open(courses->data.course_id + "_" + sy_name + ".csv");
     if (fin.good()) {
         student_node *cur;
         string line;
         while (getline(fin, line)) {
             //Create new node
-            if (!courses.head) {
-                courses.head = new student_node;
-                cur = courses.head;
+            if (!courses->data.head) {
+                courses->data.head = new student_node;
+                cur = courses->data.head;
             } else {
                 cur->next = new student_node;
                 cur = cur->next;
@@ -118,8 +118,11 @@ void addStudentToCourse(course_node *courses, string course_id, student_node *ne
                 return;
             }
             student_node *cur_student = cur_course->data.head;
-            cout << "Input student ID: ";
+            cout << "Input no: ";
             cin.ignore();
+            getline(cin, new_student->data.No);
+
+            cout << "Input student ID: ";
             getline(cin, new_student->data.ID);
 
             cout << "Input first name: ";
@@ -131,12 +134,10 @@ void addStudentToCourse(course_node *courses, string course_id, student_node *ne
             new_student->next = nullptr;
 
             if (cur_student == nullptr) {
-                new_student->data.No = "1";
                 cur_course->data.head = new_student;
             } else {
                 while (cur_student->next != nullptr)
                     cur_student = cur_student->next;
-                new_student->data.No = to_string(stoi(cur_student->data.No) + 1);
                 cur_student->next = new_student;
             }
             ofstream course_out;
@@ -230,9 +231,6 @@ void viewListOfStudentInCourse(course_node *courses, string course_id) {
                 // Print out the student information
                 cout << "Student ID: " << students->data.ID << endl;
                 cout << "Name: " << students->data.first_name << " " << students->data.last_name << endl;
-                cout << "Date of Birth: " << students->data.date_of_birth << endl;
-                cout << "Gender: " << (students->data.isMale ? "Male" : "Female") << endl;
-                cout << "Social ID: " << students->data.social_id << endl;
                 students = students->next;
                 cout << endl;
                 ++count;
